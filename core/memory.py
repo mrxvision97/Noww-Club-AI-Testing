@@ -4,11 +4,65 @@ import uuid
 from datetime import datetime
 from typing import Dict, List, Any, Optional
 from collections import deque
-from langchain.memory import ConversationSummaryMemory
 from langchain_core.messages import get_buffer_string, HumanMessage, AIMessage
 from langchain_openai import ChatOpenAI
 from langgraph.store.memory import InMemoryStore
 from core.database import DatabaseManager
+
+# Modern alternative to deprecated ConversationSummaryMemory
+class ModernConversationMemory:
+    def __init__(self, llm, max_messages=20):
+        self.llm = llm
+        self.max_messages = max_messages
+        self.messages = []
+        self.buffer = ""
+        
+    def add_user_message(self, content: str):
+        """Add a user message"""
+        self.messages.append(HumanMessage(content=content))
+        self._manage_memory_size()
+        
+    def add_ai_message(self, content: str):
+        """Add an AI message"""
+        self.messages.append(AIMessage(content=content))
+        self._manage_memory_size()
+    
+    def _manage_memory_size(self):
+        """Manage memory size and create summary if needed"""
+        if len(self.messages) > self.max_messages:
+            # Create summary of older messages
+            older_messages = self.messages[:-self.max_messages//2]
+            recent_messages = self.messages[-self.max_messages//2:]
+            
+            if older_messages:
+                # Create summary of older messages
+                messages_text = "\n".join([
+                    f"{'Human' if isinstance(msg, HumanMessage) else 'AI'}: {msg.content}"
+                    for msg in older_messages
+                ])
+                
+                summary_prompt = f"""
+                Please create a concise summary of this conversation history:
+                
+                {messages_text}
+                
+                Focus on key information, user preferences, and important details that should be remembered.
+                """
+                
+                try:
+                    summary_response = self.llm.invoke(summary_prompt)
+                    self.buffer = summary_response.content
+                except Exception as e:
+                    print(f"Error creating summary: {e}")
+                    self.buffer = f"Previous conversation included {len(older_messages)} messages."
+                
+                # Keep only recent messages
+                self.messages = recent_messages
+    
+    @property
+    def chat_memory(self):
+        """Compatibility property for existing code"""
+        return self
 
 class MemoryManager:
     def __init__(self, db_manager: DatabaseManager = None):
@@ -20,8 +74,7 @@ class MemoryManager:
             raise ValueError("OPENAI_API_KEY environment variable not set")
         
         try:
-            # the newest OpenAI model is "gpt-4o" which was released May 13, 2024.
-            # do not change this unless explicitly requested by the user
+            
             self.llm = ChatOpenAI(
                 model="gpt-4o",
                 temperature=0.3,
@@ -51,11 +104,10 @@ class MemoryManager:
         # Load existing memory profile
         memory_profile = self._load_memory_profile(user_id)
         
-        # Short-term memory using ConversationSummaryMemory
-        short_term_memory = ConversationSummaryMemory(
+        # Short-term memory using modern approach
+        short_term_memory = ModernConversationMemory(
             llm=self.llm,
-            return_messages=True,
-            memory_key="chat_history"
+            max_messages=20
         )
         
         # Restore short-term memory from profile
@@ -66,9 +118,9 @@ class MemoryManager:
         if memory_profile.get('recent_messages'):
             for msg in memory_profile['recent_messages']:
                 if msg['type'] == 'human':
-                    short_term_memory.chat_memory.add_user_message(msg['content'])
+                    short_term_memory.add_user_message(msg['content'])
                 else:
-                    short_term_memory.chat_memory.add_ai_message(msg['content'])
+                    short_term_memory.add_ai_message(msg['content'])
         
         # Restore long-term memories to store
         if memory_profile.get('long_term_memories'):
@@ -85,6 +137,8 @@ class MemoryManager:
         
         return {
             'short_term_memory': short_term_memory,
+            'short_term_messages': self._get_short_term_messages(short_term_memory),
+            'summary_buffer': short_term_memory.buffer if short_term_memory.buffer else "",
             'profile': memory_profile,
             'last_updated': memory_profile.get('last_updated'),
             'conversation_count': memory_profile.get('conversation_count', 0)
@@ -128,8 +182,8 @@ class MemoryManager:
         # Update recent messages from short-term memory
         recent_messages = []
         short_term = memory['short_term_memory']
-        if hasattr(short_term.chat_memory, 'messages'):
-            for msg in short_term.chat_memory.messages[-10:]:  # Keep last 10 messages
+        if hasattr(short_term, 'messages'):
+            for msg in short_term.messages[-10:]:  # Keep last 10 messages
                 if isinstance(msg, HumanMessage):
                     recent_messages.append({'type': 'human', 'content': msg.content})
                 elif isinstance(msg, AIMessage):
@@ -171,8 +225,8 @@ class MemoryManager:
         
         # Add to short-term memory
         short_term = memory['short_term_memory']
-        short_term.chat_memory.add_user_message(human_message)
-        short_term.chat_memory.add_ai_message(ai_message)
+        short_term.add_user_message(human_message)
+        short_term.add_ai_message(ai_message)
         
         # Update conversation count
         memory['conversation_count'] += 1
@@ -253,10 +307,10 @@ class MemoryManager:
         try:
             short_term = memory['short_term_memory']
             
-            # ConversationSummaryMemory automatically maintains a summary
+            # ModernConversationMemory automatically maintains a summary
             # We just need to trigger an update if there are new messages
-            if hasattr(short_term.chat_memory, 'messages') and short_term.chat_memory.messages:
-                # The summary is automatically updated by ConversationSummaryMemory
+            if hasattr(short_term, 'messages') and short_term.messages:
+                # The summary is automatically updated by ModernConversationMemory
                 # when new messages are added, so we don't need to do anything special
                 print(f"✅ Memory consolidated for user {user_id}")
         
@@ -305,8 +359,8 @@ class MemoryManager:
                 context_parts.append(f"## Recent Conversation Summary\n{short_term.buffer}")
             
             # Add recent conversation history
-            if hasattr(short_term.chat_memory, 'messages'):
-                recent_messages = short_term.chat_memory.messages[-6:]  # Last 6 messages
+            if hasattr(short_term, 'messages'):
+                recent_messages = short_term.messages[-6:]  # Last 6 messages
                 if recent_messages:
                     recent_text = "## Recent Messages\n"
                     for msg in recent_messages:
@@ -408,8 +462,8 @@ class MemoryManager:
             # Get recent messages from short-term memory
             recent_messages = []
             short_term = memory['short_term_memory']
-            if hasattr(short_term.chat_memory, 'messages'):
-                for msg in short_term.chat_memory.messages:
+            if hasattr(short_term, 'messages'):
+                for msg in short_term.messages:
                     if isinstance(msg, HumanMessage):
                         recent_messages.append({'type': 'human', 'content': msg.content})
                     elif isinstance(msg, AIMessage):
@@ -463,9 +517,9 @@ class MemoryManager:
                     short_term = memory['short_term_memory']
                     for msg in user_data['recent_messages']:
                         if msg['type'] == 'human':
-                            short_term.chat_memory.add_user_message(msg['content'])
+                            short_term.add_user_message(msg['content'])
                         else:
-                            short_term.chat_memory.add_ai_message(msg['content'])
+                            short_term.add_ai_message(msg['content'])
                 
                 # Restore summary buffer
                 if 'summary_buffer' in user_data:
@@ -513,3 +567,16 @@ class MemoryManager:
             os.remove(profile_path)
         
         print(f"✅ Cleared all memory for user {user_id}")
+    
+    def _get_short_term_messages(self, short_term_memory) -> List[Dict[str, str]]:
+        """Extract messages from short-term memory for easier access"""
+        messages = []
+        if hasattr(short_term_memory, 'messages'):
+            for msg in short_term_memory.messages:
+                if hasattr(msg, 'content'):
+                    msg_type = 'human' if isinstance(msg, HumanMessage) else 'ai'
+                    messages.append({
+                        'type': msg_type,
+                        'content': msg.content
+                    })
+        return messages

@@ -348,16 +348,20 @@ Respond with JSON only:
     def search_and_respond(self, user_id: str, query: str) -> str:
         """Handle web search requests using real DuckDuckGo search"""
         try:
+            print(f"🔍 Performing web search for query: {query}")
+            
             # Use LangChain DuckDuckGo tool for real search results
             search_tool = DuckDuckGoSearchRun(
                 api_wrapper=DuckDuckGoSearchAPIWrapper(
                     max_results=5,
-                    time="d"  
+                    time="d"  # last day
                 )
             )
             
             # Perform the actual search
+            print("📡 Executing search...")
             search_results = search_tool.run(query)
+            print(f"✅ Search completed. Results length: {len(search_results) if search_results else 0}")
             
             # Get user context for personalized responses
             user_context = self.memory_manager.get_context_for_conversation(user_id, query)
@@ -387,6 +391,7 @@ Respond with JSON only:
                     summary_prompt = self._get_fallback_search_prompt()
             
             # Generate summary using the LLM
+            print("🤖 Generating response with LLM...")
             summary_response = self.llm.invoke(
                 summary_prompt.format(
                     query=query, 
@@ -395,11 +400,14 @@ Respond with JSON only:
                 )
             )
             
+            print("✅ Response generated successfully")
             return summary_response.content
             
         except Exception as e:
-            print(f"Search error: {e}")
-            return f"I apologize, but I'm currently unable to perform web searches. The search service may be temporarily unavailable. Please try again later or rephrase your question."
+            print(f"❌ Search error: {e}")
+            import traceback
+            traceback.print_exc()
+            return f"I apologize, but I'm currently unable to perform web searches. Error: {str(e)}. Please try again later or rephrase your question."
     
     def _load_prompt_direct(self, prompt_name: str) -> Optional[str]:
         """Load prompt directly from file if PromptLoader is not available"""

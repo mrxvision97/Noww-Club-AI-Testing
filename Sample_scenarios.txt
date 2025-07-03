@@ -1,0 +1,231 @@
+
+================================================================================
+SCENARIO 1: MEMORY PERSISTENCE TEST - COLLEGE STUDENT
+================================================================================
+
+**Setup**: Start a new conversation
+
+**Conversation Flow**:
+1. User: "Hi, I'm Aman, a fourth-year engineering student at Vidyashilp University studying Computer Science"
+2. AI: [Should respond and remember name, education details]
+3. User: "I'm originally from Uttar Pradesh but staying in PG now in banglore"
+4. AI: [Should acknowledge location info]
+5. User: "My favorite food is Pudi , chole and I miss my home town street food"
+6. AI: [Should note food preferences]
+
+**Wait 10 minutes, then test memory recall**:
+7. User: "What's my name and where do I study?"
+8. AI: [Should recall: Aman, Vidyashilp University, Computer Science ]
+9. User: "What food do I like?"
+10. AI: [Should recall: Pudi Chole, street food preferences]
+
+**Expected**: AI should accurately recall all personal details
+
+================================================================================
+SCENARIO 2: INTERRUPTION DURING HABIT CREATION - FITNESS ENTHUSIAST
+================================================================================
+
+**Setup**: User wants to create a habit but gets interrupted
+
+**Conversation Flow**:
+1. User: "I want to start a morning yoga routine"
+2. AI: [Should start habit creation flow, ask for details]
+3. User: "I want to do it daily for 30 minutes"
+4. AI: [Should continue collecting habit details]
+5. **INTERRUPTION**: User: "Wait, what's the current cricket score of India vs Australia?"
+6. AI: [Should handle interruption, search for cricket score]
+7. User: "Thanks! Now let's continue with my yoga habit"
+8. AI: [Should resume yoga habit creation where it left off]
+
+**Expected**: AI should smoothly handle sports interruption and resume habit flow
+
+================================================================================
+SCENARIO 3: EMOTIONAL SUPPORT WITH MEMORY - WORK STRESS
+================================================================================
+
+**Setup**: User shares emotional concerns about Indian work culture
+
+**Conversation Flow**:
+1. User: "I'm feeling really stressed about my job at Infosys. The work pressure is too much"
+2. AI: [Should provide emotional support, remember company]
+3. User: "I work in Bangalore office and the traffic adds to my stress"
+4. AI: [Should acknowledge Bangalore traffic issues]
+5. User: "I'm thinking of switching to a startup"
+6. AI: [Should remember career concerns]
+
+**Later conversation (test memory)**:
+7. User: "How are things at work?"
+8. AI: [Should recall: Infosys job, Bangalore location, stress issues, startup consideration]
+
+**Expected**: AI remembers work context and provides relevant support
+
+================================================================================
+SCENARIO 4: FESTIVAL PLANNING INTERRUPTION
+================================================================================
+
+**Setup**: User planning Diwali celebration gets interrupted
+
+**Conversation Flow**:
+1. User: "Help me plan for Diwali celebration at home"
+2. AI: [Should start helping with Diwali planning]
+3. User: "I need to buy diyas, rangoli colors, and sweets"
+4. AI: [Should note shopping list]
+5. **INTERRUPTION**: User: "Actually, can you tell me today's weather in Mumbai?"
+6. AI: [Should provide weather info]
+7. User: "Okay, back to Diwali planning"
+8. AI: [Should resume with shopping list context]
+
+**Expected**: AI maintains festival planning context despite weather interruption
+
+================================================================================
+SCENARIO 5: GOAL SETTING WITH CULTURAL CONTEXT
+================================================================================
+
+**Setup**: User sets goal related to Indian cultural activities
+
+**Conversation Flow**:
+1. User: "I want to learn classical Indian dance - Bharatanatyam"
+2. AI: [Should start goal creation]
+3. User: "I want to perform at my cousin's wedding in 6 months"
+4. AI: [Should note timeline and occasion]
+5. User: "I'll practice 1 hour daily and take classes twice a week"
+6. AI: [Should capture practice schedule]
+7. **INTERRUPTION**: User: "What's the best app for learning Sanskrit?"
+8. AI: [Should provide Sanskrit learning app suggestions]
+9. User: "Thanks! Now save my Bharatanatyam goal"
+10. AI: [Should complete goal creation with all details]
+
+**Expected**: AI remembers all goal details despite Sanskrit app interruption
+
+================================================================================
+SCENARIO 6: FOOD AND HEALTH TRACKING - REGIONAL PREFERENCES
+================================================================================
+
+**Setup**: User wants to track Indian diet for health
+
+**Conversation Flow**:
+1. User: "I want to track my daily diet to lose weight"
+2. AI: [Should start habit/goal creation]
+3. User: "I typically eat 2 rotis, dal, sabzi for lunch"
+4. AI: [Should note Indian food preferences]
+5. User: "And I love street food like chaat and samosas"
+6. AI: [Should acknowledge challenge with street food]
+7. **INTERRUPTION**: User: "What's a good yoga pose for digestion?"
+8. AI: [Should suggest yoga poses]
+9. User: "Great! Now help me create a healthy eating plan"
+10. AI: [Should resume diet planning with noted preferences]
+
+**Expected**: AI integrates yoga suggestion with diet planning context
+
+================================================================================
+SCENARIO 7: TRAVEL PLANNING WITH MOOD TRACKING
+================================================================================
+
+**Setup**: User planning trip while sharing emotional state
+
+**Conversation Flow**:
+1. User: "I'm feeling burned out and want to plan a trip to Goa"
+2. AI: [Should note emotional state and travel desire]
+3. User: "I need a break from city life in Mumbai"
+4. AI: [Should acknowledge burnout and suggest Goa activities]
+5. User: "I want to visit beaches and try water sports"
+6. AI: [Should note travel preferences]
+7. **INTERRUPTION**: User: "Actually, I'm feeling really anxious about work tomorrow"
+8. AI: [Should provide emotional support]
+9. User: "Thanks, that helps. Let's continue planning Goa trip"
+10. AI: [Should return to travel planning while being sensitive to emotional state]
+
+**Expected**: AI balances emotional support with travel planning
+
+================================================================================
+SCENARIO 8: LANGUAGE LEARNING WITH CULTURAL INTEGRATION
+================================================================================
+
+**Setup**: User wants to learn regional Indian language
+
+**Conversation Flow**:
+1. User: "I want to learn Tamil as I'm moving to Chennai for work"
+2. AI: [Should create language learning goal]
+3. User: "I need to learn basic conversational Tamil in 3 months"
+4. AI: [Should note timeline and level]
+5. User: "Especially words related to food ordering and directions"
+6. AI: [Should note practical focus areas]
+7. **INTERRUPTION**: User: "Can you suggest some good Tamil movies for beginners?"
+8. AI: [Should recommend Tamil movies with subtitles]
+9. User: "Perfect! Now set up my Tamil learning goal"
+10. AI: [Should create goal incorporating movie watching as learning method]
+
+**Expected**: AI creatively integrates movie suggestion into learning plan
+
+================================================================================
+SCENARIO 9: WEDDING PREPARATION MULTI-TASK SCENARIO
+================================================================================
+
+**Setup**: User managing multiple wedding-related tasks
+
+**Conversation Flow**:
+1. User: "My sister's wedding is in 2 months, I need to organize many things"
+2. AI: [Should offer to help with wedding planning]
+3. User: "I need to book mehendi artist, photographer, and catering"
+4. AI: [Should start creating tasks/reminders]
+5. **INTERRUPTION**: User: "Oh wait, what's a good gift for the groom's family?"
+6. AI: [Should suggest traditional Indian wedding gifts]
+7. User: "Also, I'm stressed about the budget"
+8. AI: [Should provide emotional support and budget tips]
+9. User: "Okay, let's create reminders for the booking tasks"
+10. AI: [Should create organized task list with deadlines]
+
+**Expected**: AI manages multiple contexts - planning, gifts, emotions, tasks
+
+================================================================================
+SCENARIO 10: CAREER TRANSITION WITH FAMILY CONTEXT
+================================================================================
+
+**Setup**: User considering career change in Indian family context
+
+**Conversation Flow**:
+1. User: "I want to quit my bank job and become a photographer"
+2. AI: [Should acknowledge career transition desire]
+3. User: "But my parents want me to have a stable government job"
+4. AI: [Should understand Indian family expectations]
+5. User: "I'm passionate about wedding photography especially"
+6. AI: [Should note specific photography interest]
+7. **INTERRUPTION**: User: "How do I convince traditional Indian parents about creative careers?"
+8. AI: [Should provide culturally sensitive advice]
+9. User: "That's helpful. Can you help me create a transition plan?"
+10. AI: [Should create goal considering family dynamics and passion]
+
+**Expected**: AI shows cultural understanding and creates balanced plan
+
+================================================================================
+TESTING INSTRUCTIONS:
+================================================================================
+
+1. **Memory Test**: After each scenario, ask "What do you remember about our previous conversations?" to test recall
+
+2. **Context Switching**: Verify AI maintains context when returning from interruptions
+
+3. **Cultural Sensitivity**: Check if AI shows understanding of Indian culture, food, festivals, family dynamics
+
+4. **Emotional Intelligence**: Test if AI provides appropriate emotional support in Indian context
+
+5. **Integration**: See if AI connects interruption topics with main conversation threads
+
+6. **Persistence**: Test if memories persist across chat sessions
+
+7. **Semantic Search**: Ask questions like "What did I tell you about my food preferences?" to test memory search
+
+================================================================================
+SUCCESS CRITERIA:
+================================================================================
+
+AI remembers personal details (names, locations, preferences)
+ AI handles interruptions smoothly and resumes context
+ AI shows cultural awareness and sensitivity
+ AI integrates related information across conversation threads
+ AI provides relevant emotional support when needed
+ AI maintains conversation flow despite topic changes
+ AI creates appropriate goals/habits/reminders with full context
+ AI demonstrates understanding of Indian family/social dynamics
+
+================================================================================

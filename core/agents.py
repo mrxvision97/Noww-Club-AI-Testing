@@ -8,8 +8,7 @@ from utils.prompt_loader import PromptLoader
 
 class ConversationalRAGAgent:
     def __init__(self):
-        # the newest OpenAI model is "gpt-4o" which was released May 13, 2024.
-        # do not change this unless explicitly requested by the user
+        
         self.llm = ChatOpenAI(
             model="gpt-4o",
             temperature=0.7,
@@ -77,8 +76,7 @@ class ConversationalRAGAgent:
 
 class EmotionalSupportAgent:
     def __init__(self):
-        # the newest OpenAI model is "gpt-4o" which was released May 13, 2024.
-        # do not change this unless explicitly requested by the user
+        
         self.llm = ChatOpenAI(
             model="gpt-4o",
             temperature=0.8,  # Higher temperature for more empathetic responses

@@ -1,6 +1,7 @@
 import json
 import os
 import asyncio
+import importlib.util
 from typing import Dict, List, Any, Optional, TypedDict
 from langchain_openai import ChatOpenAI
 from langchain.prompts import PromptTemplate
@@ -10,7 +11,6 @@ from core.database import DatabaseManager
 from core.memory import MemoryManager
 from core.agents import ConversationalRAGAgent, EmotionalSupportAgent
 from core.flow_manager import DynamicFlowManager, FlowStep
-from utils.prompt_loader import PromptLoader
 
 class GraphState(TypedDict):
     user_id: str
@@ -27,8 +27,30 @@ class StateGraphManager:
     def __init__(self, db_manager: DatabaseManager, memory_manager: MemoryManager):
         self.db_manager = db_manager
         self.memory_manager = memory_manager
-        self.prompt_loader = PromptLoader()
         
+        # Initialize prompt loader with safe import
+        self.prompt_loader = None
+        self.prompts_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "prompts")
+        
+        try:
+            # Try to import PromptLoader safely
+            prompt_loader_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "utils", "prompt_loader.py")
+            
+            if os.path.exists(prompt_loader_path):
+                spec = importlib.util.spec_from_file_location("prompt_loader", prompt_loader_path)
+                prompt_loader_module = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(prompt_loader_module)
+                self.prompt_loader = prompt_loader_module.PromptLoader()
+                print("✅ PromptLoader initialized successfully in StateGraphManager")
+            else:
+                print("Warning: PromptLoader file not found, using direct file reading in StateGraphManager")
+        except Exception as e:
+            print(f"Warning: Error with PromptLoader ({e}), using direct file reading in StateGraphManager")
+            self.prompt_loader = None
+        
+        # Check for OpenAI API key
+        if not os.getenv("OPENAI_API_KEY"):
+            raise ValueError("OPENAI_API_KEY environment variable not set. Please add it to your .env file or system environment variables.")
        
         self.llm = ChatOpenAI(
             model="gpt-4o",
@@ -185,7 +207,14 @@ class StateGraphManager:
         context = state.get("context", "")
         
         # Load intent classification prompt
-        intent_prompt = self.prompt_loader.load_prompt("intent_classifier")
+        if self.prompt_loader:
+            try:
+                intent_prompt = self.prompt_loader.load_prompt("intent_classifier")
+            except Exception as e:
+                print(f"Error loading intent_classifier prompt: {e}")
+                intent_prompt = self._get_fallback_intent_prompt()
+        else:
+            intent_prompt = self._get_fallback_intent_prompt()
         
         prompt = PromptTemplate(
             input_variables=["message", "context"],
@@ -854,3 +883,39 @@ class StateGraphManager:
                 "pending_confirmation": None,
                 "error": str(e)
             }
+    
+    def _get_fallback_intent_prompt(self) -> str:
+        """Fallback intent classification prompt"""
+        return """You are an intent classifier for a personal AI assistant. Analyze the user's message and classify their intent.
+
+User message: {message}
+Context: {context}
+
+Classify the intent as one of:
+- habit: User wants to create, track, or manage habits
+- goal: User wants to set, track, or manage goals  
+- reminder: User wants to create or manage reminders
+- emotional_support: User needs emotional support or is sharing feelings
+- web_search: User is asking for current information or wants to search the web
+- casual_chat: General conversation, greetings, or casual questions
+
+Respond with JSON only:
+{{
+    "intent": "intent_name",
+    "confidence": 0.0-1.0,
+    "reasoning": "brief explanation"
+}}"""
+
+    def _read_prompt_file(self, prompt_name: str) -> str:
+        """Read prompt file directly as fallback"""
+        try:
+            prompt_path = os.path.join(self.prompts_dir, f"{prompt_name}.txt")
+            if os.path.exists(prompt_path):
+                with open(prompt_path, 'r', encoding='utf-8') as f:
+                    return f.read()
+            else:
+                print(f"Warning: Prompt file {prompt_name}.txt not found")
+                return ""
+        except Exception as e:
+            print(f"Error reading prompt file {prompt_name}: {e}")
+            return ""

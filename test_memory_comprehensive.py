@@ -1,8 +1,3 @@
-#!/usr/bin/env python3
-"""
-Comprehensive memory system test to verify ChromaDB removal and
-LangGraph InMemoryStore + ConversationSummaryMemory implementation.
-"""
 
 import os
 import sys

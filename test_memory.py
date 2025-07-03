@@ -47,7 +47,7 @@ def test_memory_system():
         # Test 2: Add some interactions
         print("\n📝 Test 2: Add interactions")
         test_interactions = [
-            ("Hello, I'm John and I love playing guitar", "Hi John! Nice to meet you. That's wonderful that you play guitar! How long have you been playing?"),
+            ("Hello, I'm Aman and I love playing guitar", "Hi John! Nice to meet you. That's wonderful that you play guitar! How long have you been playing?"),
             ("I've been playing for about 5 years now", "That's impressive! Five years is quite a commitment. What style of music do you enjoy playing most?"),
             ("I mostly play rock and blues", "Excellent choices! Rock and blues are foundational genres. Do you have a favorite guitarist who inspires you?"),
             ("I really admire B.B. King and Eric Clapton", "Great taste! Both are legendary blues guitarists. B.B. King's emotional playing and Clapton's versatility are truly inspiring.")
