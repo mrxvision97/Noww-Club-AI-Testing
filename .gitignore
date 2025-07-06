@@ -15,6 +15,14 @@ vector_stores/
 *.sqlite3
 noww_club.db
 
+# OAuth and API credentials
+client_secret_*.json
+*.json
+!package.json
+!pyproject.toml
+credentials.json
+token.json
+
 # Python
 __pycache__/
 *.py[cod]
