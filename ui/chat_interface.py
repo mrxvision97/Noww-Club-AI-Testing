@@ -72,14 +72,12 @@ class ChatInterface:
     
     def render(self):
         """Render the chat interface"""
-        # Use session manager messages if available, otherwise fallback to legacy
-        if self.session_manager:
-            messages = st.session_state.get('messages', [])
-        else:
-            # Legacy support - initialize chat history if not exists
-            if "chat_history" not in st.session_state:
-                st.session_state.chat_history = []
-            messages = st.session_state.chat_history
+        # Initialize messages consistently - always use 'messages' key
+        if "messages" not in st.session_state:
+            st.session_state.messages = []
+        
+        # Get messages from session state
+        messages = st.session_state.messages
         
         # Display chat history
         self._display_chat_history(messages)
@@ -100,10 +98,7 @@ class ChatInterface:
         
         # Use provided messages or get from session state
         if messages is None:
-            if self.session_manager:
-                messages = st.session_state.get('messages', [])
-            else:
-                messages = st.session_state.get('chat_history', [])
+            messages = st.session_state.get('messages', [])
         
         # Add custom CSS for chat bubbles with enhanced modern styling
         st.markdown("""
@@ -795,12 +790,14 @@ class ChatInterface:
                 "timestamp": utc_time.isoformat()
             }
             
-            # Save message using session manager if available
+            # Always add to messages in session state
+            if "messages" not in st.session_state:
+                st.session_state.messages = []
+            st.session_state.messages.append(user_message)
+            
+            # Also save via session manager if available
             if self.session_manager:
                 self.session_manager.save_message("user", message)
-            else:
-                # Legacy: add to chat history
-                st.session_state.chat_history.append(user_message)
             
             # Handle vision board request
             self._handle_vision_board_request()
@@ -815,12 +812,14 @@ class ChatInterface:
             "timestamp": utc_time.isoformat()
         }
         
-        # Save message using session manager if available
+        # Always add to messages in session state
+        if "messages" not in st.session_state:
+            st.session_state.messages = []
+        st.session_state.messages.append(user_message)
+        
+        # Also save via session manager if available
         if self.session_manager:
             self.session_manager.save_message("user", message)
-        else:
-            # Legacy: add to chat history
-            st.session_state.chat_history.append(user_message)
         
         # Create placeholder for streaming response
         response_placeholder = st.empty()
@@ -848,12 +847,12 @@ class ChatInterface:
                     "timestamp": utc_time.isoformat()
                 }
                 
-                # Save message using session manager if available
+                # Always add to messages in session state
+                st.session_state.messages.append(ai_message)
+                
+                # Also save via session manager if available
                 if self.session_manager:
                     self.session_manager.save_message("assistant", formatted_response)
-                else:
-                    # Legacy: add to chat history
-                    st.session_state.chat_history.append(ai_message)
                 
                 # Voice output if enabled
                 if (st.session_state.get('voice_output', False) and 
@@ -881,9 +880,12 @@ class ChatInterface:
                     "content": "I'm sorry, I encountered an error processing your message. Please try again.",
                     "timestamp": utc_time.isoformat()
                 }
-                st.session_state.chat_history.append(ai_message)
+                st.session_state.messages.append(ai_message)
         
-        # Force scroll to new message before rerun
+        # Clear the response placeholder to avoid duplicate content
+        response_placeholder.empty()
+        
+        # Force scroll to new message
         st.markdown("""
         <script>
         setTimeout(function() {
@@ -1018,6 +1020,9 @@ class ChatInterface:
                 
                 container.markdown(html_content, unsafe_allow_html=True)
                 time.sleep(0.04)  # Adjust speed for smooth streaming
+        
+        # Clear the container after streaming is complete
+        # This prevents the streamed content from interfering with the main chat display
     
     def _format_ai_response(self, response: str) -> str:
         """Format AI response to ensure proper markdown and styling"""
