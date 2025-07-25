@@ -1,6 +1,7 @@
 import streamlit as st
 import os
 import json
+import time
 from datetime import datetime
 from dotenv import load_dotenv
 
@@ -32,25 +33,43 @@ load_dotenv()
 
 # Cloud deployment directory setup
 def setup_cloud_directories():
-    """Setup required directories for cloud deployment"""
+    """Setup required directories for cloud deployment with detailed logging"""
     directories = [
         'user_profiles',
-        'vector_stores',
+        'user_profiles/episodic',
+        'vector_stores', 
         'logs',
         'temp',
         'data',
         'database'
     ]
     
+    print("\n📁 DIRECTORY SETUP")
+    print("-" * 60)
+    
     for directory in directories:
         try:
             if not os.path.exists(directory):
                 os.makedirs(directory, exist_ok=True)
                 print(f"✅ Created directory: {directory}")
+                
+                # Create .gitkeep files for empty directories to ensure they're preserved
+                gitkeep_path = os.path.join(directory, '.gitkeep')
+                if not os.path.exists(gitkeep_path):
+                    with open(gitkeep_path, 'w') as f:
+                        f.write(f"# Placeholder for {directory} directory\n")
+                        f.write(f"# Created: {datetime.now().isoformat()}\n")
+                    print(f"   � Added .gitkeep to {directory}")
             else:
-                print(f"📁 Directory already exists: {directory}")
+                # Check directory permissions
+                if os.access(directory, os.W_OK):
+                    print(f"✅ Directory exists and writable: {directory}")
+                else:
+                    print(f"⚠️  Directory exists but not writable: {directory}")
         except Exception as e:
             print(f"❌ Error creating directory {directory}: {e}")
+            
+    print("-" * 60)
 
 def log_startup_banner():
     """Display startup banner and environment info for visibility in cloud logs"""
@@ -61,10 +80,38 @@ def log_component_status(component_name: str, status: str, details: str = "", er
     cloud_logger.log_component_status(component_name, status, details, error)
 
 def initialize_cloud_databases():
-    """Initialize databases and create default files for cloud deployment"""
+    """Initialize databases and create default files for cloud deployment with comprehensive logging"""
     try:
-        # Create default user profile if it doesn't exist
-        default_profile_path = os.path.join('user_profiles', 'default_user_profile.json')
+        print("\n💾 DATABASE INITIALIZATION")
+        print("-" * 60)
+        
+        # Initialize SQLite database
+        db_path = 'noww_club.db'
+        if not os.path.exists(db_path):
+            import sqlite3
+            conn = sqlite3.connect(db_path)
+            conn.close()
+            print("✅ Created SQLite database file")
+        else:
+            # Check database size and accessibility
+            try:
+                size = os.path.getsize(db_path)
+                print(f"✅ SQLite database exists ({size:,} bytes)")
+                
+                # Test database connection
+                import sqlite3
+                conn = sqlite3.connect(db_path)
+                cursor = conn.cursor()
+                cursor.execute("SELECT COUNT(*) FROM sqlite_master WHERE type='table'")
+                table_count = cursor.fetchone()[0]
+                conn.close()
+                print(f"   📊 Database contains {table_count} tables")
+            except Exception as e:
+                print(f"⚠️  Database exists but connection test failed: {e}")
+        
+        # Create user profiles structure
+        profiles_dir = 'user_profiles'
+        default_profile_path = os.path.join(profiles_dir, 'default_user_profile.json')
         if not os.path.exists(default_profile_path):
             default_profile = {
                 "user_id": "default_user",
@@ -82,28 +129,67 @@ def initialize_cloud_databases():
             
             with open(default_profile_path, 'w', encoding='utf-8') as f:
                 json.dump(default_profile, f, indent=2)
-            print("✅ Created default user profile")
+            print("✅ Created default user profile template")
+        else:
+            print("✅ Default user profile template exists")
         
-        # Initialize vector store directory with placeholder
+        # Initialize episodic memory directory
+        episodic_dir = os.path.join('user_profiles', 'episodic')
+        episodic_readme = os.path.join(episodic_dir, 'README.md')
+        if not os.path.exists(episodic_readme):
+            with open(episodic_readme, 'w') as f:
+                f.write("# Episodic Memory Storage\n")
+                f.write("This directory stores detailed episodic memories for personalized vision boards.\n")
+                f.write("Files are named as: {user_id}_episodic.json\n")
+            print("✅ Created episodic memory directory structure")
+        
+        # Initialize vector store directory
         vector_store_path = os.path.join('vector_stores', '.gitkeep')
         if not os.path.exists(vector_store_path):
             with open(vector_store_path, 'w') as f:
                 f.write("# Vector stores will be created here\n")
-            print("✅ Created vector store placeholder")
+                f.write(f"# Created: {datetime.now().isoformat()}\n")
+            print("✅ Created vector store directory structure")
+        else:
+            print("✅ Vector store directory structure exists")
         
-        # Create logs directory with placeholder
+        # Create logs directory with initial log file
         logs_path = os.path.join('logs', 'app.log')
         if not os.path.exists(logs_path):
             with open(logs_path, 'w') as f:
-                f.write(f"Application started at {datetime.now().isoformat()}\n")
-            print("✅ Created log file")
+                f.write(f"Noww Club AI Application Log\n")
+                f.write(f"Started: {datetime.now().isoformat()}\n")
+                f.write(f"Environment: {'Cloud (Render)' if os.getenv('RENDER') else 'Local'}\n")
+                f.write("-" * 50 + "\n")
+            print("✅ Created application log file")
+        else:
+            print("✅ Application log file exists")
+            
+        # Create temp directory for vision boards
+        temp_readme = os.path.join('temp', 'README.md')
+        if not os.path.exists(temp_readme):
+            with open(temp_readme, 'w') as f:
+                f.write("# Temp Directory\n")
+                f.write("This directory stores temporary files including:\n")
+                f.write("- Generated vision board images\n")
+                f.write("- Temporary processing files\n")
+                f.write("- Cache files\n")
+            print("✅ Created temp directory documentation")
+            
+        print("-" * 60)
+        print("✅ All databases and file structures initialized")
             
     except Exception as e:
         print(f"❌ Error initializing cloud databases: {e}")
+        import traceback
+        traceback.print_exc()
 
 def ensure_database_file():
-    """Ensure the SQLite database file exists"""
+    """Ensure the SQLite database file exists and is properly initialized"""
     try:
+        print("\n🗄️  DATABASE FILE VERIFICATION")
+        print("-" * 60)
+        
         db_path = 'noww_club.db'
         if not os.path.exists(db_path):
             # Create empty database file
@@ -112,9 +198,48 @@ def ensure_database_file():
             conn.close()
             print("✅ Created SQLite database file")
         else:
-            print("📊 Database file already exists")
+            # Verify database integrity
+            try:
+                import sqlite3
+                conn = sqlite3.connect(db_path)
+                cursor = conn.cursor()
+                
+                # Test basic functionality
+                cursor.execute("SELECT sqlite_version()")
+                version = cursor.fetchone()[0]
+                print(f"✅ SQLite database operational (version {version})")
+                
+                # Check for existing tables
+                cursor.execute("SELECT COUNT(*) FROM sqlite_master WHERE type='table'")
+                table_count = cursor.fetchone()[0]
+                print(f"   📊 Database contains {table_count} tables")
+                
+                # Get database size
+                size = os.path.getsize(db_path)
+                print(f"   💾 Database size: {size:,} bytes")
+                
+                conn.close()
+                
+            except Exception as db_error:
+                print(f"⚠️  Database file exists but has issues: {db_error}")
+                # Create backup and new database
+                backup_path = f"{db_path}.backup_{int(time.time())}"
+                import shutil
+                shutil.move(db_path, backup_path)
+                print(f"   💾 Moved corrupted database to {backup_path}")
+                
+                # Create new database
+                import sqlite3
+                conn = sqlite3.connect(db_path)
+                conn.close()
+                print("   ✅ Created new SQLite database file")
+                
+        print("-" * 60)
+        
     except Exception as e:
-        print(f"❌ Error creating database file: {e}")
+        print(f"❌ Error with database file: {e}")
+        import traceback
+        traceback.print_exc()
 
 # Page configuration
 st.set_page_config(
@@ -173,10 +298,30 @@ def initialize_components():
         # Memory Manager (with Pinecone fallback)
         try:
             memory_manager = MemoryManager(db_manager)
-            cloud_logger.log_memory_status(
-                memory_manager.using_pinecone,
-                "Ready for conversations and vision boards"
-            )
+            if memory_manager.using_pinecone:
+                cloud_logger.log_memory_status(
+                    True,
+                    "Pinecone vector database connected"
+                )
+                print("     🔍 Semantic search enabled")
+                print("     💾 Persistent memory across sessions")
+                print("     🧠 Advanced context retrieval active")
+            else:
+                cloud_logger.log_memory_status(
+                    False, 
+                    "Local file storage active"
+                )
+                print("     📁 File-based memory storage")
+                print("     ⚠️  Limited semantic search capabilities")
+                print("     💡 Add PINECONE_API_KEY for enhanced memory features")
+                
+            # Test memory functionality
+            try:
+                test_stats = memory_manager.get_memory_stats("test_user")
+                print(f"     📊 Memory system test: {test_stats.get('storage_type', 'unknown')} storage ready")
+            except Exception as mem_test_error:
+                print(f"     ⚠️  Memory system test warning: {mem_test_error}")
+                
         except Exception as e:
             log_component_status("Memory Manager", "ERROR", str(e), e)
             raise

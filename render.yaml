@@ -2,7 +2,17 @@ services:
   - type: web
     name: noww-club-ai-testing
     env: python
-    buildCommand: pip install -r requirements.txt
+    buildCommand: |
+      echo "🚀 Starting Noww Club AI deployment build..."
+      pip install --upgrade pip
+      pip install -r requirements.txt
+      echo "📁 Creating required directories..."
+      python -c "import os; dirs=['user_profiles', 'user_profiles/episodic', 'vector_stores', 'logs', 'temp', 'data', 'database']; [os.makedirs(d, exist_ok=True) for d in dirs]; print('✅ All directories created')"
+      echo "🏥 Running deployment health check..."
+      python deployment_health_check.py
+      echo "🧪 Running post-deployment system test..."
+      python post_deployment_test.py
+      echo "✅ Build process completed successfully!"
     startCommand: streamlit run app.py --server.port=$PORT --server.address=0.0.0.0 --server.headless=true --logger.level=info
     envVars:
       - key: OPENAI_API_KEY
