@@ -20,7 +20,6 @@ serpapi
 
 # Vector Database and Embeddings
 pinecone[asyncio]
-chromadb
 
 # Authentication and API
 supabase
@@ -69,8 +68,6 @@ charset-normalizer
 idna
 six
 python-multipart
-fastapi
-uvicorn
 
 # Supabase Dependencies
 postgrest
@@ -82,13 +79,13 @@ storage3
 email-validator
 python-jose
 
-# Security
-jwt
+# Security - Use PyJWT instead of jwt
 PyJWT
 
 # File handling
 aiofiles
-python-magic
 
 # Additional utility packages
 click
+rich
+toml
