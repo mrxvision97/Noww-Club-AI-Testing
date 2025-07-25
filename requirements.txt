@@ -20,12 +20,16 @@ serpapi
 
 # Vector Database and Embeddings
 pinecone[asyncio]
+chromadb
 
 # Authentication and API
 supabase
 google-auth
 google-auth-oauthlib
 google-auth-httplib2
+passlib
+bcrypt
+cryptography
 
 # Database
 sqlalchemy
@@ -56,6 +60,35 @@ pytest
 # Cloud Deployment
 gunicorn
 
-# Additional utilities
+# Additional Dependencies
 typing-extensions
-asyncio
+websockets
+urllib3
+certifi
+charset-normalizer
+idna
+six
+python-multipart
+fastapi
+uvicorn
+
+# Supabase Dependencies
+postgrest
+gotrue
+realtime
+storage3
+
+# Email and Communication
+email-validator
+python-jose
+
+# Security
+jwt
+PyJWT
+
+# File handling
+aiofiles
+python-magic
+
+# Additional utility packages
+click
