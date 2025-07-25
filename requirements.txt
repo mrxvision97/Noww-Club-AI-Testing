@@ -1,60 +1,61 @@
-
-
 # Core Framework
-streamlit>=1.46.0
+streamlit
 
 # AI and Language Models
-openai>=1.0.0
-langchain>=0.3.26
-langchain-openai>=0.3.25
-langchain-community>=0.3.0
-langgraph>=0.2.0
+openai
+langchain
+langchain-openai
+langchain-community
+langgraph
 
 # Data Processing and Analytics
-pandas>=2.3.0
-plotly>=6.1.2
-pydantic>=2.0.0
-numpy>=1.24.0
+pandas
+plotly
+pydantic
+numpy
 
 # Web Search
-google-search-results>=2.4.2
+google-search-results
+serpapi
 
 # Vector Database and Embeddings
-pinecone[asyncio]>=7.0.0
-chromadb>=0.4.0
+pinecone[asyncio]
 
 # Authentication and API
-supabase>=2.0.0
-google-auth>=2.0.0
-google-auth-oauthlib>=1.0.0
-google-auth-httplib2>=0.2.0
+supabase
+google-auth
+google-auth-oauthlib
+google-auth-httplib2
 
 # Database
-sqlite3
-sqlalchemy>=2.0.0
+sqlalchemy
 
 # HTTP Requests
-requests>=2.31.0
-httpx>=0.24.0
+requests
+httpx
 
 # Image Processing
-Pillow>=10.0.0
+Pillow
 
 # Scheduling and Background Tasks
-schedule>=1.2.0
-apscheduler>=3.10.0
+schedule
+apscheduler
 
 # Environment Management
-python-dotenv>=1.0.0
+python-dotenv
 
 # Logging and Error Handling
-structlog>=24.0.0
+structlog
 
 # Date and Time
-pytz>=2023.3
+pytz
 
 # Development and Testing
-pytest>=7.0.0
+pytest
 
 # Cloud Deployment
-gunicorn>=21.0.0
+gunicorn
+
+# Additional utilities
+typing-extensions
+asyncio
