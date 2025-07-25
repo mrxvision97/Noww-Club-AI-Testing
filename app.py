@@ -4,9 +4,15 @@ import json
 from datetime import datetime
 from dotenv import load_dotenv
 
-# Configure logging FIRST to prevent verbose output
+# Configure logging FIRST - Use INFO for cloud deployment visibility
 from core.logging_config import setup_logging
-setup_logging("WARNING")  # Change to "INFO" or "DEBUG" if you need more details
+from core.cloud_logging import cloud_logger
+
+# Determine log level based on environment
+import sys
+is_cloud_deployment = os.getenv('RENDER') or os.getenv('PYTHON_ENV') == 'production'
+log_level = "INFO" if is_cloud_deployment else "WARNING"
+setup_logging(log_level)
 
 from core.database import DatabaseManager
 from core.memory import MemoryManager
@@ -45,6 +51,14 @@ def setup_cloud_directories():
                 print(f"📁 Directory already exists: {directory}")
         except Exception as e:
             print(f"❌ Error creating directory {directory}: {e}")
+
+def log_startup_banner():
+    """Display startup banner and environment info for visibility in cloud logs"""
+    cloud_logger.log_startup_info()
+
+def log_component_status(component_name: str, status: str, details: str = "", error: Exception = None):
+    """Log component initialization status with clear formatting"""
+    cloud_logger.log_component_status(component_name, status, details, error)
 
 def initialize_cloud_databases():
     """Initialize databases and create default files for cloud deployment"""
@@ -137,28 +151,87 @@ def initialize_session_state():
 # Initialize core components
 @st.cache_resource
 def initialize_components():
-    """Initialize all components with cloud deployment setup"""
+    """Initialize all components with detailed logging for cloud visibility"""
     try:
-        # Setup cloud directories and databases first
+        print("\n🔧 COMPONENT INITIALIZATION")
+        print("-" * 60)
+        
+        # Setup cloud environment first
         print("🚀 Setting up cloud environment...")
         setup_cloud_directories()
         initialize_cloud_databases()
         ensure_database_file()
         
-        # Initialize core components
-        print("🔧 Initializing core components...")
-        db_manager = DatabaseManager()
-        memory_manager = MemoryManager(db_manager)
-        smart_agent = SmartAgent(db_manager, memory_manager)
-        profile_manager = UserProfileManager(db_manager)
-        notification_system = NotificationSystem(db_manager)
-        voice_handler = VoiceHandler()
+        # Database Manager
+        try:
+            db_manager = DatabaseManager()
+            log_component_status("Database Manager", "SUCCESS", "SQLite database ready")
+        except Exception as e:
+            log_component_status("Database Manager", "ERROR", str(e))
+            raise
         
-        # Initialize authentication components
-        auth_manager = AuthenticationManager(db_manager)
-        session_manager = SessionManager(auth_manager)
+        # Memory Manager (with Pinecone fallback)
+        try:
+            memory_manager = MemoryManager(db_manager)
+            cloud_logger.log_memory_status(
+                memory_manager.using_pinecone,
+                "Ready for conversations and vision boards"
+            )
+        except Exception as e:
+            log_component_status("Memory Manager", "ERROR", str(e), e)
+            raise
         
-        print("✅ All components initialized successfully")
+        # Smart Agent
+        try:
+            smart_agent = SmartAgent(db_manager, memory_manager)
+            log_component_status("Smart Agent", "SUCCESS", "GPT-4o ready")
+        except Exception as e:
+            log_component_status("Smart Agent", "ERROR", str(e))
+            raise
+        
+        # Profile Manager
+        try:
+            profile_manager = UserProfileManager(db_manager)
+            log_component_status("Profile Manager", "SUCCESS", "User profiles ready")
+        except Exception as e:
+            log_component_status("Profile Manager", "ERROR", str(e))
+            raise
+        
+        # Notification System
+        try:
+            notification_system = NotificationSystem(db_manager)
+            log_component_status("Notification System", "SUCCESS", "Notifications ready")
+        except Exception as e:
+            log_component_status("Notification System", "WARNING", f"Non-critical: {e}")
+            notification_system = None
+        
+        # Voice Handler
+        try:
+            voice_handler = VoiceHandler()
+            log_component_status("Voice Handler", "SUCCESS", "Voice features ready")
+        except Exception as e:
+            log_component_status("Voice Handler", "WARNING", f"Non-critical: {e}")
+            voice_handler = None
+        
+        # Authentication Manager
+        try:
+            auth_manager = AuthenticationManager(db_manager)
+            log_component_status("Auth Manager", "SUCCESS", "Authentication ready")
+        except Exception as e:
+            log_component_status("Auth Manager", "ERROR", str(e))
+            raise
+        
+        # Session Manager
+        try:
+            session_manager = SessionManager(auth_manager)
+            log_component_status("Session Manager", "SUCCESS", "Session handling ready")
+        except Exception as e:
+            log_component_status("Session Manager", "ERROR", str(e))
+            raise
+        
+        print("-" * 60)
+        print("✅ ALL CORE COMPONENTS INITIALIZED SUCCESSFULLY")
+        cloud_logger.log_app_ready(8)  # 8 components total
         
         return {
             'db_manager': db_manager,
@@ -171,12 +244,17 @@ def initialize_components():
             'session_manager': session_manager
         }
     except Exception as e:
-        print(f"❌ Error initializing components: {e}")
+        print("-" * 60)
+        print(f"❌ CRITICAL ERROR IN COMPONENT INITIALIZATION: {e}")
+        print("🛑 Application cannot start without core components")
+        print("=" * 60)
         st.error(f"Failed to initialize components: {e}")
+        import traceback
+        traceback.print_exc()
         return None
 
 def check_environment():
-    """Check if all required environment variables are set"""
+    """Check if all required environment variables are set with enhanced logging"""
     required_vars = ['OPENAI_API_KEY']
     optional_vars = {
         'GOOGLE_CLIENT_ID': 'Google OAuth authentication',
@@ -184,45 +262,65 @@ def check_environment():
         'GOOGLE_REDIRECT_URI': 'Google OAuth authentication',
         'SUPABASE_URL': 'Supabase authentication',
         'SUPABASE_KEY': 'Supabase authentication',
-        'JWT_SECRET_KEY': 'JWT token encryption (auto-generated if not provided)'
+        'JWT_SECRET_KEY': 'JWT token encryption (auto-generated if not provided)',
+        'PINECONE_API_KEY': 'Enhanced vector memory storage'
     }
     
-    missing_vars = []
+    missing_required = []
+    missing_optional = []
     
     for var in required_vars:
         if not os.getenv(var):
-            missing_vars.append(var)
+            missing_required.append(var)
     
-    if missing_vars:
-        st.error(f"Missing required environment variables: {', '.join(missing_vars)}")
-        st.info("Please set these in your environment or .env file")
-        return False
-    
-    # Show info about optional variables
-    missing_optional = []
     for var, description in optional_vars.items():
         if not os.getenv(var):
             missing_optional.append(f"{var} ({description})")
     
+    # Use cloud logger for environment check
+    cloud_logger.log_environment_check(missing_required, missing_optional)
+    
+    if missing_required:
+        st.error(f"Missing required environment variables: {', '.join(missing_required)}")
+        st.info("Please set these in your environment or .env file")
+        return False
+    
     if missing_optional:
-        st.info(f"Optional environment variables not set: {', '.join(missing_optional)}")
-        st.info("Some authentication methods may not be available")
+        st.info(f"Optional environment variables not set: {len(missing_optional)} items")
+        st.info("Some advanced features may not be available")
     
     return True
 
 def main():
     try:
+        # For cloud deployment, run health check first
+        if os.getenv('RENDER'):
+            print("\n🏥 Running deployment health check...")
+            try:
+                from deployment_health_check import log_deployment_status
+                log_deployment_status()
+            except Exception as e:
+                print(f"⚠️  Health check failed: {e}")
+        
+        # Display startup banner for cloud log visibility
+        log_startup_banner()
+        
         # Initialize session state
         initialize_session_state()
         
         # Debug: Check for OAuth callback
         query_params = st.query_params
         if query_params:
-            print(f"Query params detected: {dict(query_params)}")
+            print(f"🔗 Query params detected: {dict(query_params)}")
         
         # Check environment variables first
+        print("\n🔍 ENVIRONMENT CHECK")
+        print("-" * 60)
         if not check_environment():
+            print("❌ Environment check failed - stopping application")
             st.stop()
+        else:
+            print("✅ Environment variables validated")
         
         # Initialize components
         components = initialize_components()

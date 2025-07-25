@@ -365,13 +365,19 @@ class LocalMemoryStore:
 class PineconeMemoryStore:
     """Pinecone-based vector store for user memories"""
     
-    def __init__(self, api_key: str, index_name: str = "nowwclubchatbot"):
+    def __init__(self, api_key: str, index_name: str = "nowwclub-ai-testing"):
         self.api_key = api_key
         self.index_name = index_name
         
-        # Initialize Pinecone client
-        self.pc = Pinecone(api_key=api_key)
+        print(f"🔧 Initializing Pinecone with API key: {api_key[:15]}...")
         
+        # Initialize Pinecone client with timeout
+        try:
+            self.pc = Pinecone(api_key=api_key)
+            print("✅ Pinecone client initialized")
+        except Exception as e:
+            print(f"❌ Failed to initialize Pinecone client: {e}")
+            raise
         
         try:
             # Use OpenAI text-embedding-3-small (1536 dimensions) and truncate to 1024
@@ -388,32 +394,54 @@ class PineconeMemoryStore:
             print("Please ensure OPENAI_API_KEY is set correctly")
             raise
         
-        # Get or create index
+        # Get or create index with timeout and retry logic
         try:
-            # Check if index exists
-            existing_indexes = [index.name for index in self.pc.list_indexes()]
+            print(f"🔍 Checking for existing Pinecone indexes...")
+            # Add timeout to list_indexes call
+            existing_indexes = []
+            try:
+                existing_indexes = [index.name for index in self.pc.list_indexes()]
+                print(f"📋 Found existing indexes: {existing_indexes}")
+            except Exception as list_error:
+                print(f"⚠️  Could not list indexes: {list_error}")
+                print("🔧 Attempting to connect to index directly...")
             
-            if index_name not in existing_indexes:
-                print(f"Index {index_name} not found. Available indexes: {existing_indexes}")
-                # Create index if it doesn't exist
-                print(f"Creating index {index_name}...")
-                self.pc.create_index(
-                    name=index_name,
-                    dimension=1024,  
-                    metric="cosine",
-                    spec=ServerlessSpec(
-                        cloud="aws",
-                        region="us-east-1"
-                    )
-                )
-                print(f"✅ Created Pinecone index: {index_name}")
-            
-            # Connect to index
-            self.index = self.pc.Index(index_name)
-            print(f"✅ Connected to Pinecone index: {index_name}")
+            # Try to connect to index directly
+            try:
+                self.index = self.pc.Index(index_name)
+                # Test connection with a simple describe call
+                self.index.describe_index_stats()
+                print(f"✅ Connected to existing Pinecone index: {index_name}")
+            except Exception as connect_error:
+                print(f"⚠️  Could not connect to index {index_name}: {connect_error}")
+                
+                if index_name not in existing_indexes:
+                    print(f"🔧 Creating new index {index_name}...")
+                    try:
+                        self.pc.create_index(
+                            name=index_name,
+                            dimension=1024,  
+                            metric="cosine",
+                            spec=ServerlessSpec(
+                                cloud="aws",
+                                region="us-east-1"
+                            )
+                        )
+                        print(f"✅ Created Pinecone index: {index_name}")
+                        
+                        # Wait a moment for index to be ready
+                        import time
+                        time.sleep(2)
+                        
+                        self.index = self.pc.Index(index_name)
+                    except Exception as create_error:
+                        print(f"❌ Failed to create index: {create_error}")
+                        raise
+                else:
+                    raise connect_error
             
         except Exception as e:
-            print(f"❌ Error connecting to Pinecone index: {e}")
+            print(f"❌ Error with Pinecone index setup: {e}")
             raise
     
     def _get_user_namespace(self, user_id: str) -> str:
@@ -560,12 +588,15 @@ class MemoryManager:
             
             if pinecone_key:
                 try:
+                    print(f"🔧 Attempting Pinecone connection with key: {pinecone_key[:20]}...")
+                    print("📍 Creating PineconeMemoryStore instance...")
                     self.memory_store = PineconeMemoryStore(
                         api_key=pinecone_key.strip('"'),
-                        index_name="nowwclubchatbot"
+                        index_name="nowwclub-ai-testing"
                     )
                     self.using_pinecone = True
                     print("✅ Memory system initialized with Pinecone integration")
+                    print("🌐 Vector search and semantic memory enabled")
                 except Exception as pinecone_error:
                     print(f"⚠️  Pinecone initialization failed: {pinecone_error}")
                     print("📂 Falling back to local memory storage")
@@ -573,6 +604,8 @@ class MemoryManager:
                     self.using_pinecone = False
             else:
                 print("⚠️  PINECONE_API_KEY not found, using local storage")
+                print("📋 Available env vars:", [k for k in os.environ.keys() if 'PINECONE' in k])
+                print("📂 Initializing local memory storage...")
                 self.memory_store = LocalMemoryStore()
                 self.using_pinecone = False
             
