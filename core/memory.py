@@ -226,6 +226,142 @@ class EpisodicMemoryFramework:
             return "I'm growing and learning with each step"
 
 
+class LocalMemoryStore:
+    """Local file-based memory store as fallback when Pinecone is unavailable"""
+    
+    def __init__(self, storage_dir: str = "vector_stores"):
+        self.storage_dir = storage_dir
+        os.makedirs(storage_dir, exist_ok=True)
+        
+        try:
+            # Initialize OpenAI embeddings for local storage
+            self.embeddings = OpenAIEmbeddings(
+                model="text-embedding-3-small",
+                api_key=os.getenv("OPENAI_API_KEY")
+            )
+            self.has_embeddings = True
+            print("✅ Local memory store initialized with OpenAI embeddings")
+        except Exception as e:
+            print(f"⚠️  Local memory store initialized without embeddings: {e}")
+            self.has_embeddings = False
+    
+    def _get_user_file(self, user_id: str) -> str:
+        """Get file path for user memories"""
+        return os.path.join(self.storage_dir, f"user_{user_id}_memories.json")
+    
+    def store_memory(self, user_id: str, memory_text: str, metadata: Dict[str, Any] = None) -> str:
+        """Store memory locally"""
+        try:
+            memory_id = str(uuid.uuid4())
+            
+            # Create memory record
+            memory_record = {
+                'id': memory_id,
+                'text': memory_text,
+                'metadata': metadata or {},
+                'timestamp': datetime.now().isoformat()
+            }
+            
+            # Load existing memories
+            file_path = self._get_user_file(user_id)
+            memories = []
+            if os.path.exists(file_path):
+                try:
+                    with open(file_path, 'r', encoding='utf-8') as f:
+                        memories = json.load(f)
+                except:
+                    memories = []
+            
+            # Add new memory
+            memories.append(memory_record)
+            
+            # Keep only last 1000 memories to prevent file bloat
+            if len(memories) > 1000:
+                memories = memories[-1000:]
+            
+            # Save back to file
+            with open(file_path, 'w', encoding='utf-8') as f:
+                json.dump(memories, f, indent=2, ensure_ascii=False)
+            
+            return memory_id
+            
+        except Exception as e:
+            print(f"Error storing local memory: {e}")
+            return ""
+    
+    def search_memories(self, user_id: str, query: str, top_k: int = 5) -> List[Dict[str, Any]]:
+        """Search memories locally (simple text matching when no embeddings)"""
+        try:
+            file_path = self._get_user_file(user_id)
+            if not os.path.exists(file_path):
+                return []
+            
+            with open(file_path, 'r', encoding='utf-8') as f:
+                memories = json.load(f)
+            
+            # Simple keyword matching if no embeddings available
+            query_lower = query.lower()
+            scored_memories = []
+            
+            for memory in memories:
+                text_lower = memory['text'].lower()
+                # Simple scoring based on keyword matches
+                score = 0
+                for word in query_lower.split():
+                    if word in text_lower:
+                        score += 1
+                
+                if score > 0:
+                    scored_memories.append({
+                        'text': memory['text'],
+                        'metadata': memory.get('metadata', {}),
+                        'score': score / len(query_lower.split())
+                    })
+            
+            # Sort by score and return top results
+            scored_memories.sort(key=lambda x: x['score'], reverse=True)
+            return scored_memories[:top_k]
+            
+        except Exception as e:
+            print(f"Error searching local memories: {e}")
+            return []
+    
+    def get_user_memory_count(self, user_id: str) -> int:
+        """Get count of stored memories for user"""
+        try:
+            file_path = self._get_user_file(user_id)
+            if not os.path.exists(file_path):
+                return 0
+            
+            with open(file_path, 'r', encoding='utf-8') as f:
+                memories = json.load(f)
+            return len(memories)
+        except:
+            return 0
+    
+    def get_memory_stats(self, user_id: str) -> Dict[str, Any]:
+        """Get memory statistics for user"""
+        try:
+            count = self.get_user_memory_count(user_id)
+            return {
+                'total_memories': count,
+                'storage_type': 'local_file',
+                'has_embeddings': self.has_embeddings
+            }
+        except:
+            return {'total_memories': 0, 'storage_type': 'local_file', 'has_embeddings': False}
+    
+    def delete_user_memories(self, user_id: str) -> bool:
+        """Delete all memories for a user"""
+        try:
+            file_path = self._get_user_file(user_id)
+            if os.path.exists(file_path):
+                os.remove(file_path)
+            return True
+        except:
+            return False
+
+
 class PineconeMemoryStore:
     """Pinecone-based vector store for user memories"""
     
@@ -397,7 +533,7 @@ class PineconeMemoryStore:
             return {'total_memories': 0, 'namespace': self._get_user_namespace(user_id)}
 
 class MemoryManager:
-    """Enhanced Memory Manager with Pinecone integration and episodic memory"""
+    """Enhanced Memory Manager with Pinecone integration and local fallback"""
     
     def __init__(self, db_manager: DatabaseManager = None):
         self.db_manager = db_manager or DatabaseManager()
@@ -408,8 +544,6 @@ class MemoryManager:
         
         if not openai_key:
             raise ValueError("OPENAI_API_KEY environment variable not set")
-        if not pinecone_key:
-            raise ValueError("PINECONE_API_KEY environment variable not set")
         
         try:
             # Initialize LLM
@@ -418,21 +552,40 @@ class MemoryManager:
                 temperature=0.3,
                 api_key=openai_key
             )
+            print("✅ LLM initialized successfully")
             
-            # Initialize Pinecone memory store
-            self.pinecone_store = PineconeMemoryStore(
-                api_key=pinecone_key.strip('"'),  # Remove quotes if present
-                index_name="nowwclubchatbot"
-            )
+            # Try to initialize Pinecone, fallback to local storage if fails
+            self.memory_store = None
+            self.using_pinecone = False
+            
+            if pinecone_key:
+                try:
+                    self.memory_store = PineconeMemoryStore(
+                        api_key=pinecone_key.strip('"'),
+                        index_name="nowwclubchatbot"
+                    )
+                    self.using_pinecone = True
+                    print("✅ Memory system initialized with Pinecone integration")
+                except Exception as pinecone_error:
+                    print(f"⚠️  Pinecone initialization failed: {pinecone_error}")
+                    print("📂 Falling back to local memory storage")
+                    self.memory_store = LocalMemoryStore()
+                    self.using_pinecone = False
+            else:
+                print("⚠️  PINECONE_API_KEY not found, using local storage")
+                self.memory_store = LocalMemoryStore()
+                self.using_pinecone = False
             
             # Initialize episodic memory framework
             self.episodic_framework = EpisodicMemoryFramework(self.llm)
             
-            print("✅ Memory system initialized with Pinecone integration")
-            
         except Exception as e:
-            print(f"Error initializing memory components: {e}")
-            raise
+            print(f"❌ Critical error initializing memory components: {e}")
+            # Create minimal fallback
+            self.memory_store = LocalMemoryStore()
+            self.using_pinecone = False
+            self.episodic_framework = None
+            print("📂 Using minimal local storage fallback")
         
         # Initialize in-memory store for session data
         self.store = InMemoryStore()
@@ -784,7 +937,7 @@ class MemoryManager:
                     **(metadata or {})
                 }
                 
-                memory_id = self.pinecone_store.store_memory(
+                memory_id = self.memory_store.store_memory(
                     user_id, 
                     conversation_context, 
                     memory_metadata
@@ -818,9 +971,9 @@ class MemoryManager:
             # Save episodic memories
             self._save_episodic_memories(user_id, episodic_memories)
             
-            # Store episodic summary in Pinecone
+            # Store episodic summary in vector store
             episodic_summary = self._create_episodic_summary(episodic_data)
-            self.pinecone_store.store_memory(
+            self.memory_store.store_memory(
                 user_id,
                 episodic_summary,
                 {
@@ -853,7 +1006,7 @@ class MemoryManager:
     def search_semantic_memories(self, user_id: str, query: str, limit: int = 5) -> List[Dict[str, Any]]:
         """Search for relevant memories using Pinecone"""
         try:
-            return self.pinecone_store.search_memories(user_id, query, top_k=limit)
+            return self.memory_store.search_memories(user_id, query, top_k=limit)
         except Exception as e:
             print(f"Error searching semantic memories: {e}")
             return []
@@ -1284,7 +1437,7 @@ class MemoryManager:
             memory = self.get_user_memory(user_id)
             
             # Pinecone stats
-            pinecone_stats = self.pinecone_store.get_memory_stats(user_id)
+            memory_stats = self.memory_store.get_memory_stats(user_id)
             
             # Episodic memory stats
             episodic_memories = memory['episodic_memories']
@@ -1295,12 +1448,12 @@ class MemoryManager:
             return {
                 'user_id': user_id,
                 'total_conversations': memory['conversation_count'],
-                'semantic_memories': pinecone_stats['total_memories'],
+                'semantic_memories': memory_stats.get('total_memories', 0),
                 'episodic_memories': len(episodic_memories),
                 'personality_traits': len(profile.get('personality_traits', [])),
                 'preferences': len(profile.get('preferences', {})),
                 'last_updated': memory.get('last_updated'),
-                'pinecone_namespace': pinecone_stats['namespace']
+                'storage_type': memory_stats.get('storage_type', 'unknown')
             }
             
         except Exception as e:
