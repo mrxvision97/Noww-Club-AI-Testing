@@ -1,0 +1,54 @@
+Create a beautifully structured digital vision board with the exact same design, layout, orientation, and collage style as the attached reference image. Use a calming aesthetic with colors that match {USER_AESTHETIC}. Keep the grid-based collage style intact with a mix of inspirational quotes, wellness imagery, personal growth scenes, and meaningful lifestyle visuals. Maintain the same image-to-text ratio and typographic hierarchy.
+
+Update the affirmations, captions, and text blocks to reflect this persona:
+
+Name: {USER_NAME}
+Age: {USER_AGE}
+Identity: {USER_PERSONALITY}
+Values: {USER_VALUES}
+Energy: {USER_ENERGY}
+Aspirations: {USER_GOALS}
+
+Visual Elements & Themes:
+{VISUAL_ELEMENTS}
+{LIFESTYLE_ELEMENTS}
+{DOMINANT_THEMES}
+
+Include Affirmations and Phrases (personalized from intake):
+- Mantras reflecting {EMOTIONAL_TONE}
+- Affirmations based on {USER_VALUES}
+- Purpose statements aligned with {USER_GOALS}
+- Self-love phrases matching {USER_PERSONALITY}
+- Growth mindset quotes from {DOMINANT_THEMES}
+- Peaceful living statements from intake responses
+- Abundance affirmations reflecting personal dreams
+
+Visual Content Categories:
+MINDFULNESS: Meditation, reflection, and inner peace imagery
+WELLNESS: Health, balance, and self-care visuals from intake
+GROWTH: Personal development and {USER_VALUES} representation
+CREATIVITY: {VISUAL_ELEMENTS} and creative expression imagery
+PURPOSE: {USER_GOALS} visualization and meaningful work
+PEACE: Calm environments and {LIFESTYLE_ELEMENTS}
+ABUNDANCE: Prosperity and fulfillment symbols
+AUTHENTICITY: "Most you" moments from intake responses
+DREAMS: {USER_GOALS} and aspirational lifestyle imagery
+BALANCE: Harmony between all life areas from responses
+
+Design Specifications:
+- Soft, harmonious color palette matching {USER_AESTHETIC}
+- Minimalist, clean aesthetic
+- Gender-neutral imagery and symbols
+- Inspiring typography and meaningful quotes
+- Natural textures and calming visuals
+- Balanced composition with breathing space
+
+CRITICAL LAYOUT REQUIREMENTS:
+- Create a COMPLETE vision board with NO text or images cut off at any edges
+- Ensure ALL elements are FULLY VISIBLE within the square canvas boundaries
+- Leave adequate margin/padding around all edges (minimum 40 pixels)
+- Center the composition perfectly - nothing should be cropped or partially visible
+- ALL text must be completely readable and fully within the frame
+- ALL images and graphics must be entirely visible, not cut off at top, bottom, or sides
+- Design should fit perfectly within a 1024x1024 square with proper spacing
+- Every element should be strategically placed to be completely viewable

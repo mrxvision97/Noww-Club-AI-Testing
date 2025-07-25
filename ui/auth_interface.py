@@ -36,32 +36,48 @@ class AuthInterface:
             <p style="color: #E6E6FA; font-size: 1.2rem; font-weight: 500; margin: 0;">
                 Your Personalized AI Companion with Memory & Intelligence
             </p>
+            <p style="color: #E6E6FA; font-size: 1rem; font-weight: 400; margin-top: 10px; opacity: 0.9;">
+                Sign in or create an account to get started
+            </p>
         </div>
         """, unsafe_allow_html=True)
         
-        # Authentication tabs
-        tab1, tab2, tab3, tab4, tab5 = st.tabs([
-            "🔐 Local Sign In", 
-            "👤 Local Sign Up", 
-            "📧 Supabase Email", 
-            "📱 Supabase Phone", 
-            "🌐 OAuth"
+        # Authentication tabs - Streamlit and OAuth options commented for deployment
+        # tab1, tab2, tab3, tab4, tab5 = st.tabs([
+        #     "🔐 Local Sign In", 
+        #     "👤 Local Sign Up", 
+        #     "📧 Supabase Email", 
+        #     "📱 Supabase Phone", 
+        #     "🌐 OAuth"
+        # ])
+        
+        # Simplified authentication with only email and phone options
+        tab1, tab2 = st.tabs([
+            "📧 Email Sign In/Up", 
+            "📱 Phone Sign In/Up"
         ])
         
         with tab1:
-            self.render_signin_form()
-        
-        with tab2:
-            self.render_signup_form()
-            
-        with tab3:
             self.render_supabase_email_auth()
             
-        with tab4:
+        with tab2:
             self.render_supabase_phone_auth()
         
-        with tab5:
-            self.render_oauth_options()
+        # Commented out for deployment - can be re-enabled later
+        # with tab1:
+        #     self.render_signin_form()
+        # 
+        # with tab2:
+        #     self.render_signup_form()
+        #     
+        # with tab3:
+        #     self.render_supabase_email_auth()
+        #     
+        # with tab4:
+        #     self.render_supabase_phone_auth()
+        # 
+        # with tab5:
+        #     self.render_oauth_options()
     
     def render_signin_form(self):
         """Render the sign-in form"""
@@ -305,12 +321,12 @@ class AuthInterface:
                             st.error("Authentication failed")
     
     def render_supabase_email_auth(self):
-        """Render Supabase email authentication with OTP verification"""
-        st.markdown("### 📧 Supabase Email Authentication")
+        """Render email authentication with OTP verification"""
+        st.markdown("### 📧 Email Authentication")
         
         if not self.auth_manager.supabase_client:
-            st.error("❌ Supabase authentication is not configured")
-            st.info("Please check your SUPABASE_URL and SUPABASE_KEY in the .env file")
+            st.error("❌ Email authentication is not configured")
+            st.info("Please check your authentication settings")
             return
         
         # Check if we're in OTP verification mode
@@ -319,9 +335,9 @@ class AuthInterface:
             return
         
         # Email signup/signin form
-        auth_type = st.radio("Choose action:", ["Sign In", "Sign Up"], key="supabase_email_type")
+        auth_type = st.radio("Choose action:", ["Sign In", "Sign Up"], key="email_auth_type")
         
-        with st.form("supabase_email_form"):
+        with st.form("email_auth_form"):
             email = st.text_input("📧 Email Address", placeholder="Enter your email")
             password = st.text_input("🔒 Password", type="password", placeholder="Enter your password")
             
@@ -431,12 +447,12 @@ class AuthInterface:
             st.rerun()
     
     def render_supabase_phone_auth(self):
-        """Render Supabase phone authentication with SMS OTP"""
-        st.markdown("### 📱 Supabase Phone Authentication")
+        """Render phone authentication with SMS OTP"""
+        st.markdown("### 📱 Phone Authentication")
         
         if not self.auth_manager.supabase_client:
-            st.error("❌ Supabase authentication is not configured")
-            st.info("Please check your SUPABASE_URL and SUPABASE_KEY in the .env file")
+            st.error("❌ Phone authentication is not configured")
+            st.info("Please check your authentication settings")
             return
         
         # Check if we're in OTP verification mode
@@ -445,9 +461,9 @@ class AuthInterface:
             return
         
         # Phone signup/signin form
-        auth_type = st.radio("Choose action:", ["Sign In", "Sign Up"], key="supabase_phone_type")
+        auth_type = st.radio("Choose action:", ["Sign In", "Sign Up"], key="phone_auth_type")
         
-        with st.form("supabase_phone_form"):
+        with st.form("phone_auth_form"):
             phone = st.text_input("📱 Phone Number", placeholder="+1234567890 (include country code)")
             password = st.text_input("🔒 Password", type="password", placeholder="Enter your password")
             

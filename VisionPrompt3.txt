@@ -1,0 +1,57 @@
+Create a bold, empowering, and luxurious digital vision board using the exact same collage layout, visual style, orientation, and energetic aesthetic as the reference image. The board should have a modern, high-vibe, gender-neutral energy with bright lighting, contrast-rich tones, and confident affirmation overlays. Use a harmonious color palette that matches {USER_AESTHETIC} throughout the collage. Blend photo cutouts, sticker graphics, and stylish typography overlays.
+
+Match these key design traits from the reference:
+- Mixed fonts (bold serif, elegant script, and all-caps modern fonts)
+- Use of affirmations layered over lifestyle photos
+- Cutout-style visuals representing success, achievement, and lifestyle goals
+- A balance between luxury, success, self-worth, and personal power
+- Keep a similar element density, positioning, and text-image ratio
+
+Update content for this persona:
+Name: {USER_NAME}
+Age: {USER_AGE}
+Identity: {USER_PERSONALITY}
+Aspirations: {USER_GOALS}
+Values: {USER_VALUES}
+Energy: {USER_ENERGY}
+Tone: {EMOTIONAL_TONE}
+
+Visual Elements to Include:
+{VISUAL_ELEMENTS}
+{LIFESTYLE_ELEMENTS}
+
+Affirmations & Text Blocks (based on intake responses):
+- Personalized affirmation reflecting {EMOTIONAL_TONE}
+- Success mantras aligned with {USER_VALUES}
+- {USER_GOALS} achievement visualization
+- Confidence statements matching {USER_PERSONALITY}
+- Personal power phrases from {DOMINANT_THEMES}
+
+Visual Content Categories:
+SUCCESS & WEALTH: Elements representing {USER_GOALS} achievement
+CONFIDENCE: Imagery reflecting {USER_ENERGY} and personal power
+LIFESTYLE: {LIFESTYLE_ELEMENTS} and dream life visualization  
+GROWTH: Personal development and {USER_VALUES} imagery
+RELATIONSHIPS: Connection and community elements from intake
+EXPRESSION: {VISUAL_ELEMENTS} representing authentic self
+ABUNDANCE: Prosperity and success symbols aligned with goals
+EMPOWERMENT: Strength and achievement imagery
+DREAMS: {USER_GOALS} and future self visualization
+
+Design Specifications:
+- Bold, confident visual style
+- High-contrast, vibrant imagery
+- Mix of photography and graphic elements
+- Inspirational typography and quotes
+- Color scheme reflecting {USER_AESTHETIC}
+- Gender-neutral representation throughout
+
+CRITICAL LAYOUT REQUIREMENTS:
+- Create a COMPLETE vision board with NO text or images cut off at any edges
+- Ensure ALL elements are FULLY VISIBLE within the square canvas boundaries
+- Leave adequate margin/padding around all edges (minimum 40 pixels)
+- Center the composition perfectly - nothing should be cropped or partially visible
+- ALL text must be completely readable and fully within the frame
+- ALL images and graphics must be entirely visible, not cut off at top, bottom, or sides
+- Design should fit perfectly within a 1024x1024 square with proper spacing
+- Every element should be strategically placed to be completely viewable

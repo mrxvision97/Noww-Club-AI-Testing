@@ -1,0 +1,89 @@
+Create a gender-neutral, visually powerful vision board with the same layout, aesthetic, structure, and energy as the attached image. Prioritize strong imagery over text — each photo should represent a key goal or identity visually. Use moody, high-contrast lighting, clear definition, and sharply focused images that depict ambition, achievement, self-discipline, and transformation.
+
+🧑‍💼 Persona (based on intake responses):
+Name: {USER_NAME}
+Age: {USER_AGE}
+Vibe: {USER_PERSONALITY}
+Goals: {USER_GOALS}
+Style: {USER_AESTHETIC}
+Energy: {USER_ENERGY}
+
+🎯 Themes to Visually Represent (based on intake insights):
+Discipline & Achievement
+- {VISUAL_ELEMENTS}
+- Focus and determination imagery
+- Achievement symbols and success markers
+- Clean, intentional lifestyle elements
+
+Personal Growth & Mindset  
+- {EMOTIONAL_TONE} energy
+- Transformation and growth symbols
+- Learning and development imagery
+- {LIFESTYLE_ELEMENTS}
+
+Values & Aspirations
+- {USER_VALUES} represented visually
+- {DOMINANT_THEMES} themes
+- Personal meaning symbols
+- Future self visualization
+
+Minimalist black "FOCUS" or "DISCIPLINE" poster
+
+Handwriting journal shot (top-down view)
+
+Wealth & Power
+
+A luxury car (Ferrari, BMW, etc.)
+
+A superbike (like Honda CBR or Ducati)
+
+Stack of money, cards, sleek wallet visuals
+
+Style & Identity
+
+Capsule wardrobe shots (clean, luxury men's fashion)
+
+Fragrance lineup (Tom Ford, Dior, etc.)
+
+Confident man walking with purpose or with bike
+
+Portrait with sunglasses & sharp outfit
+
+Lifestyle & Vision
+
+Jet or yacht lifestyle shot (sunny, goal-driven energy)
+
+Travel image or map with pins
+
+“2025” typography in bold serif
+
+Short motivational words like:
+
+Future Me
+
+Remember the Goal
+
+You can.
+
+Hardwork + Consistency = Success
+
+Design Rules:
+Picture-driven: 80% of the vision board should be high-quality photos with a message in themselves
+
+Text minimalism: Only 4–5 short affirmations or phrases, in bold serif or minimal sans fonts
+
+Color palette: Black, steel grey, muted earth tones, soft contrast whites — NO bright colors
+
+Layout: Keep the grid format, layering, and density like the original (structured chaos look)
+
+Vibe: Clean hustle, inner fire, outer calm, disciplined ambition
+
+CRITICAL LAYOUT REQUIREMENTS:
+- Create a COMPLETE vision board with NO text or images cut off at any edges
+- Ensure ALL elements are FULLY VISIBLE within the square canvas boundaries
+- Leave adequate margin/padding around all edges (minimum 40 pixels)
+- Center the composition perfectly - nothing should be cropped or partially visible
+- ALL text must be completely readable and fully within the frame
+- ALL images and graphics must be entirely visible, not cut off at top, bottom, or sides
+- Design should fit perfectly within a 1024x1024 square with proper spacing
+- Every element should be strategically placed to be completely viewable

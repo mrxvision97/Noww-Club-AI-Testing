@@ -1,0 +1,91 @@
+Create a sophisticated, gender-neutral creative vision board that captures ARTISTIC EXPRESSION, LEADERSHIP VISION, and INTENTIONAL DESIGN using the exact layout style and aesthetic of a premium creative magazine spread. The composition should be inspiring, professionally curated, and artistically structured.
+
+🎯 PERSONALIZED USER PROFILE:
+Name: {USER_NAME}
+Age: {USER_AGE} | Core Identity: {USER_PERSONALITY}
+Creative Values: {USER_VALUES}
+Artistic Aspirations: {USER_GOALS}
+Visual Aesthetic: {USER_AESTHETIC}
+Creative Energy: {USER_ENERGY}
+Emotional Core: {EMOTIONAL_TONE}
+Visual Symbols: {VISUAL_ELEMENTS}
+Lifestyle Context: {LIFESTYLE_ELEMENTS}
+Personal Values: {CORE_VALUES}
+Life Aspirations: {LIFE_ASPIRATIONS}
+Creative Traits: {PERSONALITY_TRAITS}
+
+🎨 EXACT VISUAL STYLE TO REPLICATE:
+- **Color Palette**: Warm earth tones, soft creams, gentle gold accents, muted sage greens, warm greys
+- **Mood**: Creative, inspiring, thoughtfully curated, artistic flow
+- **Lighting**: Natural, soft lighting with warm tones and gentle contrast
+- **Texture**: Organic materials, creative tools, artistic elements, flowing designs
+
+📸 REQUIRED VISUAL ELEMENTS (75% imagery, 25% text):
+
+**CREATIVE EXPRESSION CORNER:**
+- Artist's workspace with beautiful tools and materials
+- Creative hands working on art, writing, or design
+- Beautiful notebook with inspiring handwritten notes
+- Modern creative studio setup with plants and natural light
+
+**LEADERSHIP & VISION SECTION:**
+- Confident professional in inspiring workspace
+- Vision board or planning materials spread out
+- Speaking or presenting to engaged audience
+- Collaborative creative team working together
+
+**LIFESTYLE & INSPIRATION AREA:**
+- Beautifully designed living space with creative touches
+- Travel inspiration with artistic destinations
+- Cultural experiences - galleries, performances, creative spaces
+- Mindful moments in nature or inspiring environments
+
+**PERSONAL GROWTH & VALUES:**
+- Books and learning materials artistically arranged
+- Meditation or reflection space with beautiful design
+- Community and connection imagery
+- Achievement and celebration moments
+
+**AFFIRMATION TEXT OVERLAYS** (5-6 phrases maximum):
+- "Create" in elegant, flowing typography
+- "Vision & Voice" in artistic lettering
+- "Lead with Heart" in clean, modern font
+- "Express Authentically" in script style
+- "Design Your Life" in bold, confident letters
+- "2025" in sophisticated numerals
+
+🏗️ EXACT TEMPLATE STRUCTURE REQUIREMENTS:
+Follow VisionTemplate2.jpg layout precisely - Creative Professional Vision Board:
+
+**SECTIONAL LAYOUT** (6-8 asymmetrical rectangular sections):
+- **UPPER LEFT**: Creative workspace showcase (user's {VISUAL_ELEMENTS})
+- **UPPER CENTER**: Leadership vision area (user's {LIFE_ASPIRATIONS})  
+- **UPPER RIGHT**: Personal aesthetic corner (user's {USER_AESTHETIC})
+- **MIDDLE LEFT**: Growth & learning section (user's {CORE_VALUES})
+- **CENTER FOCUS**: Main aspiration display (user's {USER_GOALS})
+- **MIDDLE RIGHT**: Community & connection area (user's {LIFESTYLE_ELEMENTS})
+- **LOWER SECTION**: Achievement celebration space (user's {PERSONALITY_TRAITS})
+- **FLOWING ELEMENTS**: Artistic connectors between sections
+
+**SOPHISTICATED CREATIVE AESTHETIC**:
+- **Background**: Warm cream/sage foundation with artistic texture
+- **Typography**: Elegant script + modern sans-serif combinations
+- **Text Overlays**: User's values as golden text highlights
+- **Visual Harmony**: Earth tones with creative pops of color
+- **Artistic Flow**: Organic connections between life areas
+
+**USER DATA INTEGRATION**:
+Each section must reflect the user's authentic creative journey and aspirations, not generic creative imagery.
+
+⚡ CRITICAL TECHNICAL REQUIREMENTS:
+- **Canvas**: Perfect 1024x1024 square with 50px margin on all sides
+- **Completion**: Every element FULLY visible, no cropping at edges
+- **Spelling**: Perfect spelling and grammar in all text elements
+- **Image Quality**: High-quality, artistic photography with warm tones
+- **Text Legibility**: All typography perfectly readable and beautifully integrated
+- **Color Harmony**: Cohesive, inspiring color palette that feels creative and intentional
+
+🎯 ENERGY TO CAPTURE:
+This vision board represents a creative visionary who leads with intention, expresses authentically, and designs a meaningful life. The aesthetic should feel like a premium lifestyle magazine focused on creative living and purposeful leadership - inspiring but grounded, artistic but professional, visionary but achievable.
+
+FINAL CHECK: Ensure the composition looks like it could be featured in a high-end creative lifestyle magazine about artistic living and visionary leadership.

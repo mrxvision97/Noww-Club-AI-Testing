@@ -1,0 +1,94 @@
+Create a sophisticated vision board that EXACTLY replicates the layout and visual structure of a high-end magazine collage. The composition must follow the EXACT visual template provided, with personalized content reflecting the user's authentic journey.
+
+🎯 USER PROFILE (PERSONALIZED):
+Name: {USER_NAME}
+Age: {USER_AGE}
+Core Identity: {USER_PERSONALITY}
+Values: {USER_VALUES}
+Life Aspirations: {USER_GOALS}
+Visual Style: {USER_AESTHETIC}
+Energy Level: {USER_ENERGY}
+Specific Symbols: {VISUAL_ELEMENTS}
+Color Mood: {COLOR_PALETTE}
+Lifestyle Context: {LIFESTYLE_ELEMENTS}
+
+🎨 MANDATORY VISUAL STRUCTURE (EXACT TEMPLATE REPLICATION):
+
+**LAYOUT REQUIREMENT**: Create an asymmetrical grid layout with 6-8 distinct rectangular sections, exactly like a premium magazine collage. Each section must be clearly defined with specific content.
+
+**COLOR SCHEME** (MUST MATCH TEMPLATE):
+- Primary: Deep charcoal black backgrounds (#1a1a1a)
+- Accent: Warm golden text and highlights (#d4af37, #ffd700)
+- Supporting: Rich earth tones, soft whites, steel grey
+- Mood: Sophisticated, aspirational, luxury minimalism
+
+📸 EXACT SECTION BREAKDOWN (80% imagery, 20% text):
+
+**TOP LEFT - IDENTITY SECTION:**
+- LARGE text: "{EMOTIONAL_TONE}" or "DISCIPLINE" in elegant serif font
+- Background: Deep black with subtle texture
+- Small accent: White lotus or symbolic flower from user's journey
+
+**TOP RIGHT - ASPIRATION CORNER:**
+- Professional figure in sophisticated attire (reflects user's goals)
+- Text overlay: "Future Me" in elegant gold typography
+- Background: Moody cinematic lighting
+
+**MIDDLE LEFT - SYMBOL AREA:**
+- User's key visual symbol: {PERSONAL_SYMBOLS}
+- Clean minimal background
+- Small text: "Remember the Goal" in clean font
+
+**MIDDLE RIGHT - ACHIEVEMENT SECTION:**
+- Premium object reflecting user's aspirations (based on {LIFE_ASPIRATIONS})
+- Could be: luxury car, elegant workspace, travel destination, etc.
+- Text: "You. can." with intentional punctuation
+
+**BOTTOM LEFT - GROWTH METAPHOR:**
+- Ascending ladder or stairs disappearing into atmosphere
+- Represents user's growth journey
+- Minimal, symbolic, powerful
+
+**BOTTOM RIGHT - LIFESTYLE VISION:**
+- Object/scene reflecting user's desired lifestyle from {LIFESTYLE_ELEMENTS}
+- Premium aesthetic matching user's energy: {USER_ENERGY}
+- Background: Sophisticated setting
+
+**CENTER/FLOATING ELEMENTS:**
+- Text: "Hardwork Consistency = Success" 
+- Text: "2025" in bold, striking numerals
+- Small accent symbols related to user's {CORE_VALUES}
+
+🏗️ CRITICAL EXECUTION REQUIREMENTS:
+
+1. **EXACT TEMPLATE STRUCTURE**: Follow the asymmetrical grid layout exactly as shown in template
+2. **PERSONALIZED CONTENT**: Replace generic elements with user-specific symbols, goals, and aesthetics
+3. **TYPOGRAPHY HIERARCHY**: Use elegant serif for main words, clean sans-serif for motivational phrases
+4. **VISUAL FLOW**: Eye should move naturally through sections telling user's story
+5. **SPACING**: Clean margins, deliberate negative space for premium feel
+6. **LIGHTING**: Moody cinematic lighting with strong contrast throughout
+7. **COHERENCE**: All elements must work together as one cohesive, personalized vision
+
+**FINAL OUTPUT REQUIREMENTS**: 
+1. Create EXACTLY 6-8 rectangular sections in an asymmetrical grid layout
+2. Use deep charcoal backgrounds with warm golden text overlays
+3. Each section must contain either a sophisticated image or elegant typography
+4. Follow the exact visual hierarchy: large hero elements + smaller accent pieces
+5. Maintain luxury magazine aesthetic with clean spacing and premium feel
+6. Include user's personalized content within the template structure
+7. Ensure sophisticated, aspirational mood throughout all sections
+
+The final vision board must be indistinguishable from a high-end magazine layout while containing the user's authentic personal journey and aspirations.
+
+⚡ CRITICAL TECHNICAL REQUIREMENTS:
+- **Canvas**: Perfect 1024x1024 square with 50px margin on all sides
+- **Completion**: Every element FULLY visible, no cropping at edges
+- **Spelling**: Double-check all text for perfect spelling and grammar
+- **Image Quality**: Ultra-sharp, high-contrast, premium photography style
+- **Text Legibility**: All typography perfectly readable against backgrounds
+- **Color Accuracy**: Rich, saturated colors that feel expensive and intentional
+
+🎯 ENERGY TO CAPTURE:
+This vision board represents a person who is disciplined, sophisticated, and quietly building an extraordinary life. The aesthetic should feel like a luxury lifestyle magazine meets personal development - aspirational but achievable, confident but not flashy, powerful but refined.
+
+FINAL CHECK: Ensure the composition looks like it could be featured in a high-end men's lifestyle magazine spread about success and personal transformation.

@@ -100,6 +100,16 @@ class DatabaseManager:
             )
         ''')
         
+        # Vision board intake table
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS vision_board_intake (
+                user_id TEXT PRIMARY KEY,
+                intake_data TEXT NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+        
         conn.commit()
         conn.close()
     
@@ -321,6 +331,31 @@ class DatabaseManager:
         conn.close()
         return habits
     
+    def get_user_reminders(self, user_id: str) -> List[Dict[str, Any]]:
+        """Get user reminders"""
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            SELECT id, title, description, reminder_time, status, created_at FROM reminders
+            WHERE user_id = ? AND status = 'active'
+            ORDER BY created_at DESC
+        ''', (user_id,))
+        
+        reminders = []
+        for row in cursor.fetchall():
+            reminders.append({
+                'id': row[0],
+                'title': row[1],
+                'description': row[2],
+                'reminder_time': row[3],
+                'status': row[4],
+                'created_at': row[5]
+            })
+        
+        conn.close()
+        return reminders
+    
     def get_mood_history(self, user_id: str, days: int = 30) -> List[Dict[str, Any]]:
         """Get mood history for the last N days"""
         conn = sqlite3.connect(self.db_path)
@@ -365,3 +400,150 @@ class DatabaseManager:
             
         conn.close()
         return entries
+
+    def save_vision_board_intake(self, user_id: str, intake_data: Dict[str, Any]):
+        """Save vision board intake data"""
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        
+        # Insert or replace intake data
+        cursor.execute('''
+            INSERT OR REPLACE INTO vision_board_intake (user_id, intake_data, updated_at)
+            VALUES (?, ?, CURRENT_TIMESTAMP)
+        ''', (user_id, json.dumps(intake_data)))
+        
+        conn.commit()
+        conn.close()
+    
+    def get_vision_board_intake(self, user_id: str) -> Optional[Dict[str, Any]]:
+        """Get vision board intake data for a user"""
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            SELECT intake_data FROM vision_board_intake
+            WHERE user_id = ?
+        ''', (user_id,))
+        
+        row = cursor.fetchone()
+        conn.close()
+        
+        if row:
+            return json.loads(row[0])
+        return None
+    
+    def clear_vision_board_intake(self, user_id: str):
+        """Clear vision board intake data for a user"""
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            DELETE FROM vision_board_intake WHERE user_id = ?
+        ''', (user_id,))
+        
+        conn.commit()
+        conn.close()
+
+    def get_recent_conversations(self, user_id: str, limit: int = 50) -> List[Dict[str, Any]]:
+        """Get recent conversations for a user"""
+        return self.get_conversation_history(user_id, limit)
+    
+    def save_vision_board_creation(self, user_id: str, vision_board_data: Dict[str, Any]):
+        """Save vision board creation record with enhanced metadata"""
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        
+        # Ensure vision board creations table exists
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS vision_board_creations (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id TEXT NOT NULL,
+                template_number INTEGER NOT NULL,
+                template_name TEXT NOT NULL,
+                image_url TEXT,
+                persona_data TEXT,
+                intake_summary TEXT,
+                status TEXT DEFAULT 'completed',
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                metadata TEXT
+            )
+        ''')
+        
+        # Insert vision board creation record
+        cursor.execute('''
+            INSERT INTO vision_board_creations 
+            (user_id, template_number, template_name, image_url, persona_data, status, metadata)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        ''', (
+            user_id,
+            vision_board_data.get('template_number', 1),
+            vision_board_data.get('template_name', 'Unknown'),
+            vision_board_data.get('image_url', ''),
+            vision_board_data.get('persona_data', '{}'),
+            vision_board_data.get('status', 'completed'),
+            json.dumps(vision_board_data)
+        ))
+        
+        conn.commit()
+        conn.close()
+        
+        print(f"✅ Saved vision board creation record for user {user_id}")
+    
+    def get_user_vision_boards(self, user_id: str, limit: int = 10) -> List[Dict[str, Any]]:
+        """Get user's vision board creation history"""
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        
+        try:
+            cursor.execute('''
+                SELECT template_number, template_name, image_url, created_at, status, metadata
+                FROM vision_board_creations
+                WHERE user_id = ?
+                ORDER BY created_at DESC
+                LIMIT ?
+            ''', (user_id, limit))
+            
+            vision_boards = []
+            for row in cursor.fetchall():
+                metadata = {}
+                try:
+                    metadata = json.loads(row[5]) if row[5] else {}
+                except:
+                    pass
+                
+                vision_boards.append({
+                    'template_number': row[0],
+                    'template_name': row[1],
+                    'image_url': row[2],
+                    'created_at': row[3],
+                    'status': row[4],
+                    'metadata': metadata
+                })
+            
+            conn.close()
+            return vision_boards
+            
+        except sqlite3.OperationalError:
+            # Table doesn't exist yet
+            conn.close()
+            return []
+    
+    def enhance_conversation_metadata(self, user_id: str, conversation_id: int, metadata: Dict[str, Any]):
+        """Enhance conversation with additional metadata for better memory management"""
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        
+        try:
+            # Update the metadata for the conversation
+            cursor.execute('''
+                UPDATE conversations 
+                SET metadata = ?
+                WHERE id = ? AND user_id = ?
+            ''', (json.dumps(metadata), conversation_id, user_id))
+            
+            conn.commit()
+            conn.close()
+            
+        except Exception as e:
+            print(f"Error enhancing conversation metadata: {e}")
+            conn.close()

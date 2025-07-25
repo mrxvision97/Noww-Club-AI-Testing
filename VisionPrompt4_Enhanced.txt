@@ -1,0 +1,94 @@
+Create a serene, mindful, and balanced vision board that follows the exact layout structure and harmonious aesthetic of VisionTemplate4.jpg. This must be a calming, wellness-focused board with precise template adherence while incorporating deep personalization from user's authentic journey toward mindful living and inner peace.
+
+🎯 PERSONALIZED USER PROFILE:
+Name: {USER_NAME}
+Age: {USER_AGE} | Core Identity: {USER_PERSONALITY}
+Mindful Values: {USER_VALUES}
+Peaceful Aspirations: {USER_GOALS}
+Serene Aesthetic: {USER_AESTHETIC}
+Balanced Energy: {USER_ENERGY}
+Emotional Core: {EMOTIONAL_TONE}
+Harmony Symbols: {VISUAL_ELEMENTS}
+Lifestyle Context: {LIFESTYLE_ELEMENTS}
+Personal Values: {CORE_VALUES}
+Life Aspirations: {LIFE_ASPIRATIONS}
+Wellness Traits: {PERSONALITY_TRAITS}
+
+🏗️ EXACT TEMPLATE STRUCTURE REQUIREMENTS:
+Follow VisionTemplate4.jpg layout precisely - Mindful Balance Vision Board:
+
+**SECTIONAL LAYOUT** (6-8 harmonious rectangular sections):
+- **UPPER LEFT**: Mindfulness practices (user's {VISUAL_ELEMENTS})
+- **UPPER CENTER**: Inner peace affirmations (user's {EMOTIONAL_TONE})
+- **UPPER RIGHT**: Natural beauty corner (user's {USER_AESTHETIC})
+- **MIDDLE LEFT**: Growth & wisdom section (user's {CORE_VALUES})
+- **CENTER FOCUS**: Life balance display (user's {USER_GOALS})
+- **MIDDLE RIGHT**: Wellness lifestyle area (user's {LIFESTYLE_ELEMENTS})
+- **LOWER LEFT**: Authentic self space (user's {PERSONALITY_TRAITS})
+- **LOWER RIGHT**: Peaceful future vision (user's {LIFE_ASPIRATIONS})
+
+**SOPHISTICATED CALM AESTHETIC**:
+- **Background**: Soft earth tones with gentle natural textures
+- **Typography**: Flowing script + clean minimalist combinations
+- **Text Overlays**: User's wisdom words as soft golden text
+- **Visual Harmony**: Muted greens, warm beiges, peaceful blues
+- **Natural Elements**: Organic shapes and wellness symbols
+
+**USER DATA INTEGRATION**:
+Each section must authentically reflect the user's unique journey toward mindful living and inner harmony, not generic wellness imagery.
+
+🎨 EXACT VISUAL STYLE TO REPLICATE:
+- **Color Palette**: Soft sage greens, warm beiges, gentle earth tones, peaceful blues, natural whites
+- **Mood**: Serene, mindful, balanced, peaceful wisdom, grounded authenticity
+- **Lighting**: Natural, soft lighting with warm gentle contrast and peaceful ambiance
+- **Texture**: Organic materials, natural elements, wellness symbols, mindful imagery
+
+📸 REQUIRED VISUAL ELEMENTS (75% imagery, 25% text):
+
+**MINDFULNESS & PEACE CORNER:**
+- Meditation and reflection spaces aligned with user's {USER_GOALS}
+- Natural environments reflecting {LIFESTYLE_ELEMENTS}
+- Peaceful moments and mindful practices matching {PERSONALITY_TRAITS}
+- Inner wisdom imagery connected to user's spiritual journey
+
+**WELLNESS & BALANCE SECTION:**
+- Healthy lifestyle elements from user's {USER_AESTHETIC}
+- Self-care and nurturing practices reflecting {CORE_VALUES}
+- Physical and mental wellness visuals aligned with {EMOTIONAL_TONE}
+- Balance and harmony imagery matching user's energy
+
+**NATURAL HARMONY AREA:**
+- Beautiful natural settings and peaceful environments
+- Seasonal beauty and earth connection elements
+- Sustainable living and mindful consumption visuals
+- Nature-based healing and restoration imagery
+
+**AUTHENTIC LIVING ZONE:**
+- Genuine self-expression and authentic moments
+- Meaningful connections and community imagery
+- Purpose-driven living and value-based choices
+- Personal growth and spiritual development elements
+
+**AFFIRMATION TEXT OVERLAYS** (5-7 phrases maximum):
+- "{EMOTIONAL_TONE}" in gentle, flowing typography
+- "PEACE" in soft, mindful lettering
+- "BALANCE" in harmonious, natural font
+- "AUTHENTIC" in elegant, grounded letters
+- "{CORE_VALUES}" in peaceful script
+- "MINDFUL" in serene, centered text
+- "2025" in gentle, hopeful numerals
+
+⚡ CRITICAL TECHNICAL REQUIREMENTS:
+- **Canvas**: Perfect 1024x1024 square with 50px margin on all sides
+- **Template Adherence**: Must follow VisionTemplate4.jpg structure exactly
+- **Completion**: Every element FULLY visible, no cropping at edges
+- **Spelling**: Perfect spelling and grammar in all text elements
+- **Image Quality**: High-quality, peaceful photography with soft contrasts
+- **Text Legibility**: All typography perfectly readable and harmoniously integrated
+- **Color Harmony**: Cohesive, calming color palette with natural earth tones
+- **User Integration**: Each section reflects user's authentic wellness journey
+
+🎯 ENERGY TO CAPTURE:
+This vision board represents a mindful individual who embraces balanced living, inner peace, and authentic wellness. The aesthetic should feel like a premium mindfulness magazine focused on intentional living and spiritual growth - peaceful but purposeful, calm but inspiring, natural but elevated.
+
+FINAL CHECK: Ensure the composition follows VisionTemplate4.jpg structure while authentically representing this user's unique path to mindful balance and inner harmony.

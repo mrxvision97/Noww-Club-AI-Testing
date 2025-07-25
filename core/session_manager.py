@@ -131,6 +131,39 @@ class SessionManager:
             return success
         return False
     
+    def save_vision_board_message(self, image_url: str, template_name: str):
+        """Save a vision board message to the current chat session"""
+        if st.session_state.user_id and st.session_state.current_chat_session:
+            # Create vision board message
+            vision_message = {
+                "role": "assistant",
+                "content": "vision_board_image",
+                "timestamp": datetime.now().isoformat(),
+                "type": "vision_board",
+                "image_url": image_url,
+                "template_name": template_name
+            }
+            
+            # Save to database via auth manager
+            success = self.auth_manager.save_message(
+                st.session_state.user_id,
+                st.session_state.current_chat_session,
+                "assistant",
+                "vision_board_image",
+                metadata={
+                    "type": "vision_board",
+                    "image_url": image_url,
+                    "template_name": template_name
+                }
+            )
+            
+            if success:
+                # Add to current session messages
+                st.session_state.messages.append(vision_message)
+            
+            return success
+        return False
+    
     def get_current_user_profile_id(self) -> Optional[str]:
         """Get the current user's profile ID for compatibility with existing code"""
         if st.session_state.user_id:

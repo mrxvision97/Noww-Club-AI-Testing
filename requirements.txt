@@ -14,9 +14,31 @@ langgraph>=0.2.0
 pandas>=2.3.0
 plotly>=6.1.2
 pydantic>=2.0.0
+numpy>=1.24.0
 
 # Web Search
-duckduckgo-search>=5.0.0
+google-search-results>=2.4.2
+
+# Vector Database and Embeddings
+pinecone[asyncio]>=7.0.0
+chromadb>=0.4.0
+
+# Authentication and API
+supabase>=2.0.0
+google-auth>=2.0.0
+google-auth-oauthlib>=1.0.0
+google-auth-httplib2>=0.2.0
+
+# Database
+sqlite3
+sqlalchemy>=2.0.0
+
+# HTTP Requests
+requests>=2.31.0
+httpx>=0.24.0
+
+# Image Processing
+Pillow>=10.0.0
 
 # Scheduling and Background Tasks
 schedule>=1.2.0
@@ -25,5 +47,14 @@ apscheduler>=3.10.0
 # Environment Management
 python-dotenv>=1.0.0
 
+# Logging and Error Handling
+structlog>=24.0.0
+
+# Date and Time
+pytz>=2023.3
+
 # Development and Testing
 pytest>=7.0.0
+
+# Cloud Deployment
+gunicorn>=21.0.0

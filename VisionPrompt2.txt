@@ -1,0 +1,68 @@
+Create a stylish, gender-neutral, structured vision board with the exact same design layout, collage orientation, and modern magazine-style aesthetic as the attached sample. The board should feel curated, creative, motivational, and professionally assembled with labeled sections, handwritten notes, typography quotes, and lifestyle photography.
+
+✨ Style & Layout Guidelines:
+Keep the grid-based structure with labeled blocks reflecting:
+{DOMINANT_THEMES}, {KEY_WORDS}, and the user's personal growth areas
+
+Use a mix of:
+- Clean and script fonts
+- Bold quote overlays
+- Taped photos, artistic notes, and moodboard-style visual elements  
+- Color palette that matches {USER_AESTHETIC}
+- Feature a strong motivational central phrase based on {EMOTIONAL_TONE}
+
+👤 User Persona (Based on Intake):
+Name: {USER_NAME}
+Age: {USER_AGE}  
+Identity: {USER_PERSONALITY}
+Core Values: {USER_VALUES}
+Energy: {USER_ENERGY}
+
+Aspirations & Goals:
+{USER_GOALS}
+
+Theme: {EMOTIONAL_TONE} & {DOMINANT_THEMES}
+
+📝 Sections to Include (based on intake responses):
+LIFESTYLE: {LIFESTYLE_ELEMENTS}
+
+PASSION: Elements from {VISUAL_ELEMENTS}
+
+GROWTH: {USER_VALUES} and personal development imagery
+
+CONFIDENCE: Photos of empowered individuals in flow, expressing joy, grounded presence
+
+MINDSET: Quotes reflecting {EMOTIONAL_TONE} and {USER_PERSONALITY}
+
+INSPIRATION: Visionary leaders, soulful quotes, personal development tools
+
+DREAMS: {USER_GOALS} visualization
+
+AUTHENTICITY: Elements that represent feeling "most you" - {LIFESTYLE_ELEMENTS}
+
+EXPRESSION: {VISUAL_ELEMENTS} that represent unleashed creativity and boldness
+
+VALUES: Visual representations of {USER_VALUES}
+
+FUTURE SELF: Imagery representing {USER_GOALS} achievement
+
+CENTER QUOTE: Personalized motivational phrase based on {EMOTIONAL_TONE} and {USER_ENERGY}
+
+🔑 Design Notes:
+Ensure the overall structure exactly matches the sample mockup — with boxed themes, typography overlays, minimalist icons, and clipped images
+
+Keep the visual-to-text ratio balanced — not too text-heavy, but insightful
+
+Use handwritten fonts and highlight colors for sticky notes, quotes, and emphasis
+
+Include diverse, gender-neutral visuals, textures like fabric or books, and mood visuals (sunsets, waves, candles)
+
+CRITICAL LAYOUT REQUIREMENTS:
+- Create a COMPLETE vision board with NO text or images cut off at any edges
+- Ensure ALL elements are FULLY VISIBLE within the square canvas boundaries
+- Leave adequate margin/padding around all edges (minimum 40 pixels)
+- Center the composition perfectly - nothing should be cropped or partially visible
+- ALL text must be completely readable and fully within the frame
+- ALL images and graphics must be entirely visible, not cut off at top, bottom, or sides
+- Design should fit perfectly within a 1024x1024 square with proper spacing
+- Every element should be strategically placed to be completely viewable

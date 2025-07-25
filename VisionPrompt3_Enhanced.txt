@@ -1,0 +1,94 @@
+Create a bold, empowering, and luxurious vision board that follows the exact layout structure and sophisticated aesthetic of VisionTemplate3.jpg. This must be a high-contrast, confidence-focused board with precise template adherence while incorporating deep personalization from user's authentic aspirations and values.
+
+🎯 PERSONALIZED USER PROFILE:
+Name: {USER_NAME}
+Age: {USER_AGE} | Core Identity: {USER_PERSONALITY}
+Success Values: {USER_VALUES}
+Bold Aspirations: {USER_GOALS}
+Luxury Aesthetic: {USER_AESTHETIC}
+Confident Energy: {USER_ENERGY}
+Emotional Core: {EMOTIONAL_TONE}
+Power Symbols: {VISUAL_ELEMENTS}
+Lifestyle Context: {LIFESTYLE_ELEMENTS}
+Personal Values: {CORE_VALUES}
+Life Aspirations: {LIFE_ASPIRATIONS}
+Success Traits: {PERSONALITY_TRAITS}
+
+🏗️ EXACT TEMPLATE STRUCTURE REQUIREMENTS:
+Follow VisionTemplate3.jpg layout precisely - Bold Success Vision Board:
+
+**SECTIONAL LAYOUT** (6-8 dynamic rectangular sections):
+- **UPPER LEFT**: Success symbols showcase (user's {VISUAL_ELEMENTS})
+- **UPPER CENTER**: Confidence affirmations (user's {EMOTIONAL_TONE})
+- **UPPER RIGHT**: Luxury lifestyle corner (user's {USER_AESTHETIC})
+- **MIDDLE LEFT**: Personal power section (user's {CORE_VALUES})
+- **CENTER FOCUS**: Main achievement display (user's {USER_GOALS})
+- **MIDDLE RIGHT**: Abundant life area (user's {LIFESTYLE_ELEMENTS})
+- **LOWER LEFT**: Growth mindset space (user's {PERSONALITY_TRAITS})
+- **LOWER RIGHT**: Future vision corner (user's {LIFE_ASPIRATIONS})
+
+**SOPHISTICATED BOLD AESTHETIC**:
+- **Background**: Rich dark tones with metallic gold accents
+- **Typography**: Bold serif headlines + elegant script combinations
+- **Text Overlays**: User's power words as luminous gold text
+- **Visual Energy**: High-contrast, vibrant, and commanding
+- **Luxury Elements**: Premium lifestyle symbols reflecting user's goals
+
+**USER DATA INTEGRATION**:
+Each section must authentically reflect the user's unique path to success and personal power, not generic luxury imagery.
+
+🎨 EXACT VISUAL STYLE TO REPLICATE:
+- **Color Palette**: Deep blacks, rich golds, bold contrasts, confident reds, elegant whites
+- **Mood**: Powerful, luxurious, achievement-focused, empowering confidence
+- **Lighting**: Dramatic lighting with golden highlights and rich shadows
+- **Texture**: Premium materials, success symbols, achievement imagery, power elements
+
+📸 REQUIRED VISUAL ELEMENTS (70% imagery, 30% text):
+
+**SUCCESS & ACHIEVEMENT CORNER:**
+- Luxury success symbols aligned with user's {USER_GOALS}
+- Premium lifestyle elements reflecting {LIFESTYLE_ELEMENTS}
+- Achievement celebration imagery matching {PERSONALITY_TRAITS}
+- Business success visuals connected to user's aspirations
+
+**CONFIDENCE & POWER SECTION:**
+- Empowered individuals in premium settings
+- Leadership and influence imagery reflecting {CORE_VALUES}
+- Personal power moments that align with {EMOTIONAL_TONE}
+- Confident self-expression matching user's energy
+
+**LUXURY LIFESTYLE AREA:**
+- High-end lifestyle elements from user's {USER_AESTHETIC}
+- Premium experiences and environments
+- Sophisticated living spaces and luxury travel
+- Abundance symbols reflecting user's success vision
+
+**PERSONAL EMPOWERMENT ZONE:**
+- Self-development and growth imagery
+- Mindset and motivation visuals
+- Personal transformation elements
+- Confidence-building and success preparation
+
+**AFFIRMATION TEXT OVERLAYS** (6-8 phrases maximum):
+- "{EMOTIONAL_TONE}" in bold, commanding typography
+- "SUCCESS" in luxury gold lettering
+- "ABUNDANCE" in elegant, powerful font
+- "CONFIDENCE" in strong, modern letters
+- "{CORE_VALUES}" in sophisticated script
+- "ACHIEVE" in bold, success-focused text
+- "2025" in premium, aspirational numerals
+
+⚡ CRITICAL TECHNICAL REQUIREMENTS:
+- **Canvas**: Perfect 1024x1024 square with 50px margin on all sides
+- **Template Adherence**: Must follow VisionTemplate3.jpg structure exactly
+- **Completion**: Every element FULLY visible, no cropping at edges
+- **Spelling**: Perfect spelling and grammar in all text elements
+- **Image Quality**: High-quality, luxurious photography with bold contrasts
+- **Text Legibility**: All typography perfectly readable and powerfully integrated
+- **Color Harmony**: Cohesive, empowering color palette with gold and black dominance
+- **User Integration**: Each section reflects user's authentic success journey
+
+🎯 ENERGY TO CAPTURE:
+This vision board represents a confident achiever who embraces bold success, luxury living, and personal empowerment. The aesthetic should feel like a premium success magazine focused on achievement and abundance - powerful but sophisticated, bold but elegant, aspirational but attainable.
+
+FINAL CHECK: Ensure the composition follows VisionTemplate3.jpg structure while authentically representing this user's unique path to success and empowerment.
